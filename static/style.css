@@ -79,3 +79,61 @@ p, #title {
     font-size: 50px;
     font-family: "Unbounded";
  }
+
+ .crypto-table {
+    width: 90%;
+    color: white;
+    font-family: "Unbounded", sans-serif;
+}
+
+
+.table-header, .table-row {
+    display: grid;
+
+    grid-template-columns: 50px  2fr  1.5fr  1fr  1.5fr  50px;
+    
+    align-items: center;
+    padding: 15px 0; 
+}
+
+
+.table-header {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+
+.table-row {
+    font-size: 18px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    transition: background-color 0.2s;
+}
+
+.header-separator {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+}
+
+.coin-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.coin-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.green-text { color: #2ecc71; }
+.red-text { color: #e74c3c; }
+
+.heart-icon {
+    cursor: pointer;
+    font-style: normal;
+    font-size: 20px;
+}

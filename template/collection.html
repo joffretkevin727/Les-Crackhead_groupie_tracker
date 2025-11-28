@@ -14,25 +14,51 @@
     <div id="column">
         <h1 id="title">ALL COINS</h1>
 
-        <div class = "horizontal-seperator"></div>
+        <div class="horizontal-seperator"></div>
 
         <div id="row">
 
             <div class="left-box">
                 <p id="filter">FILTER</p>
             </div>
-            
-            <div class = "vertical-seperator"></div>
+
+            <div class="vertical-seperator"></div>
 
             <div class="right-box">
 
-                <p># Monnaie Cours 1H Volume</p>
+                <div class="crypto-table">
 
-                {{range .}}
-                <p> {{.Symbol}}</p>
-                <img class="cover" src= {{.Image}} alt="Crypto logo">
-                <p>{{.CurrentPrice}}</p>
-                {{end}}
+                    <div class="table-header">
+                        <span class="col-rank">#</span>
+                        <span class="col-name">Monnaie</span>
+                        <span class="col-price">Cours</span>
+                        <span class="col-1h">1H</span>
+                        <span class="col-vol">Volume</span>
+                        <span class="col-like"></span>
+                    </div>
+
+                    <div class="header-separator"></div>
+
+                    {{range .}}
+                    <div class="table-row">
+                        <span class="col-rank">1</span>
+                        <div class="col-name coin-info">
+                            <img src="{{.Image}}" class="coin-logo"> <span>{{.Symbol}}</span>
+                        </div>
+
+                        <span class="col-price">{{.CurrentPrice}} $</span>
+
+                        <span class="col-1h green-text">+10%</span>
+                        <span class="col-vol">400M$</span>
+
+                        <span class="col-like">
+                            <i class="heart-icon">♥</i>
+                        </span>
+                    </div>
+                    {{end}}
+
+                </div>
+
             </div>
 
         </div>
