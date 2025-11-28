@@ -12,6 +12,7 @@ func New() *http.ServeMux {
 	//------------------- ROUTES -----------------------
 	mux.HandleFunc("/", controller.Home)
 	mux.HandleFunc("/home", controller.Home)
+	mux.HandleFunc("/list", controller.Collection)
 	//--------------------------------------------------
 
 	// ---------------- STATIC FILES -------------------

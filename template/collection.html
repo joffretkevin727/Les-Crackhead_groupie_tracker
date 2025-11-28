@@ -5,10 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Title</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../static/style.css">
 
 </head>
+
 <body>
+
+    <div id="column">
+        <h1 id="title">ALL COINS</h1>
+
+        <div class = "horizontal-seperator"></div>
+
+        <div id="row">
+
+            <div class="left-box">
+                <p id="filter">FILTER</p>
+            </div>
+            
+            <div class = "vertical-seperator"></div>
+
+            <div class="right-box">
+
+                <p># Monnaie Cours 1H Volume</p>
+
+                {{range .}}
+                <p> {{.Symbol}}</p>
+                <img class="cover" src= {{.Image}} alt="Crypto logo">
+                <p>{{.CurrentPrice}}</p>
+                {{end}}
+            </div>
+
+        </div>
+
+    </div>
+
+
 
 </body>
 

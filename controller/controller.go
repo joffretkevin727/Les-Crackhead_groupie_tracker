@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"Les-Crackhead_groupie_tracker/api"
 	"bytes"
 	"html/template"
 	"net/http"
@@ -32,3 +33,9 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetData() {}
+
+func Collection(w http.ResponseWriter, r *http.Request) {
+	data := api.GetTokenList()
+
+	RenderTemplate(w, "collection.html", data)
+}
