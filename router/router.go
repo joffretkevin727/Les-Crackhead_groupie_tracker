@@ -13,6 +13,7 @@ func New() *http.ServeMux {
 	mux.HandleFunc("/", controller.Home)
 	mux.HandleFunc("/home", controller.Home)
 	mux.HandleFunc("/list", controller.Collection)
+	mux.HandleFunc("/ressource", controller.Ressource)
 	//--------------------------------------------------
 
 	// ---------------- STATIC FILES -------------------

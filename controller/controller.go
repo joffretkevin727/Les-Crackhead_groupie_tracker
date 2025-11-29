@@ -39,3 +39,7 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 
 	RenderTemplate(w, "collection.html", data)
 }
+
+func Ressource(w http.ResponseWriter, r *http.Request) {
+	RenderTemplate(w, "ressource.html", nil)
+}
