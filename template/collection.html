@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Title</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/collection-style.css">
 
 </head>
 
@@ -20,6 +20,18 @@
 
             <div class="left-box">
                 <p id="filter">FILTER</p>
+                <div>
+                    <input type="checkbox" id="layer1" name="layer1" checked />
+                    <label for="layer1">Layer 1</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="layer2" name="layer2" checked />
+                    <label for="layer2">Layer 2</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="memecoin" name="memecoin" checked />
+                    <label for="memecoin">Memecoin</label>
+                </div>
             </div>
 
             <div class="vertical-seperator"></div>
@@ -51,9 +63,7 @@
                         <span class="col-1h green-text">+10%</span>
                         <span class="col-vol">400M$</span>
 
-                        <span class="col-like">
-                            <i class="heart-icon">♥</i>
-                        </span>
+                        <img src="../static/image/favorite.svg" class="heart-icon">
                     </div>
                     {{end}}
 
