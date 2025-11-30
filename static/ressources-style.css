@@ -139,7 +139,6 @@ main {
 }
 
 #symbol {
-    margin-top: 13rem;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -158,6 +157,9 @@ main {
 #chart-container {
     width: 87%;
     height: 87%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 }
 
 .right-part {
@@ -204,4 +206,17 @@ main {
     color: #AEAEAE;
     font-size: 18px;
     font-family: "unbounded", sans-serif;
+}
+
+.story {
+    margin-top: 40px;
+    font-size: 25px;
+    font-family: "unbounded", sans-serif;
+    color: white;
+}
+
+#text-block {
+    font-family: "unbounded", sans-serif;
+    color: #AEAEAE;
+    font-size: 15px;
 }
