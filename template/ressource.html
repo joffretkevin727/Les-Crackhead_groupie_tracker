@@ -11,24 +11,67 @@
 
 <body>
     <header>
-        <img src="../static/image/CG-Symbol.svg" class="coin-logo">
-        <span>Lizard crypto</span>
-        <span>Crypto currencies</span>
-        <span>About us</span>
-        <span id="account">MY ACCOUNT</span>
+        <div id="nav">
+            <img src="../static/image/CG-Symbol.svg" class="coin-logo">
+            <span class="top">Lizard crypto</span>
+            <span class="top">Crypto currencies</span>
+
+            <form class="search-box">
+                <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                    class="search-bar-logo">
+                <input type="text" placeholder="Rechercher...">
+            </form>
+
+            <span class="top">About us</span>
+            <span id="account-btn">MY ACCOUNT</span>
+        </div>
+
     </header>
+
     <div id="horizontal-seperator"></div>
+
     <main>
         <div class="left-part">
-            <div id="symbol">
-                <img src="../static/image/bitcoin.svg.png" class="crypto-logo">
-                <span>BITCOIN</span>
+            <div id="chart-container">
+                <div id="symbol">
+                    <img src="../static/image/bitcoin.svg.png" class="crypto-logo">
+                    <span class="info">BITCOIN</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="v-div-container">
+            <div id="vertical-div">
             </div>
         </div>
 
-        <div id="vertical-div"></div>
-        
+
         <div class="right-part">
+            <div id="stats-container">
+                <span class="info">Stats</span>
+
+                <div id="table-row">
+                    <span class="gray">Market cap</span>
+                    <span class="info">1 807 505 728 720 $US</span>
+                </div>
+                <div id="stat-seperator"></div>
+                <div id="table-row">
+                    <span class="gray">Volume 24h</span>
+                    <span class="info">57 197 741 764$US</span>
+                </div>
+                <div id="stat-seperator"></div>
+                <div id="table-row">
+                    <span class="gray">Total supply</span>
+                    <span class="info">19 955 240</span>
+                </div>
+                <div id="stat-seperator"></div>
+                <div id="table-row">
+                    <span class="gray">Circulating supply</span>
+                    <span class="info">19 955 240</span>
+                </div>
+                <div id="stat-seperator"></div>
+            </div>
 
         </div>
     </main>
