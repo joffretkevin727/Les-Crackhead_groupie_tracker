@@ -220,5 +220,21 @@ main {
 #text-block {
     font-family: "unbounded", sans-serif;
     color: #AEAEAE;
-    font-size: 1rem;
+    font-size: 0.85rem;
+}
+
+#column {
+    display: flex;
+    flex-direction: column;
+}
+
+#column p {
+    font-size: 0.8rem;
+    color: white;
+    font-family: "unbounded", sans-serif;
+    cursor: pointer;
+}
+#column p:hover {
+    text-decoration: underline;
+    opacity: 0.6;
 }
