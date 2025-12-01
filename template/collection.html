@@ -11,69 +11,93 @@
 
 <body>
 
-    <div id="column">
-        <h1 id="title">ALL COINS</h1>
+    <header>
+        <div id="nav">
+            <img src="../static/image/CG-Symbol.svg" class="coin-logo">
+            <span class="top">Lizard crypto</span>
+            <span class="top">Crypto currencies</span>
 
-        <div class="horizontal-seperator"></div>
+            <form class="search-box">
+                <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                    class="search-bar-logo">
+                <input type="text" placeholder="Rechercher...">
+            </form>
 
-        <div id="row">
+            <span class="top">About us</span>
+            <span id="account-btn">MY ACCOUNT</span>
+        </div>
 
-            <div class="left-box">
-                <p id="filter">FILTER</p>
-                <div>
-                    <input type="checkbox" id="layer1" name="layer1" checked />
-                    <label for="layer1">Layer 1</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="layer2" name="layer2" checked />
-                    <label for="layer2">Layer 2</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="memecoin" name="memecoin" checked />
-                    <label for="memecoin">Memecoin</label>
-                </div>
-            </div>
+    </header>
 
-            <div class="vertical-seperator"></div>
+    <main>
+        <div id="column">
 
-            <div class="right-box">
+            <div class="horizontal-seperator"></div>
 
-                <div class="crypto-table">
+            <div id="row">
 
-                    <div class="table-header">
-                        <span class="col-rank">#</span>
-                        <span class="col-name">Monnaie</span>
-                        <span class="col-price">Cours</span>
-                        <span class="col-1h">1H</span>
-                        <span class="col-vol">Volume</span>
-                        <span class="col-like"></span>
+                <div class="left-box">
+                    <p id="filter">FILTER</p>
+                    <div>
+                        <input type="checkbox" id="layer1" name="layer1" checked />
+                        <label for="layer1">Layer 1</label>
                     </div>
+                    <div>
+                        <input type="checkbox" id="layer2" name="layer2" checked />
+                        <label for="layer2">Layer 2</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="memecoin" name="memecoin" checked />
+                        <label for="memecoin">Memecoin</label>
+                    </div>
+                </div>
 
-                    <div class="header-separator"></div>
+                <div class="vertical-seperator"></div>
 
-                    {{range .}}
-                    <div class="table-row">
-                        <span class="col-rank">1</span>
-                        <div class="col-name coin-info">
-                            <img src="{{.Image}}" class="coin-logo"> <span>{{.Symbol}}</span>
+                <div class="right-box">
+
+                    <div class="crypto-table">
+
+                        <div class="table-header">
+                            <span class="col-rank">#</span>
+                            <span class="col-name">Monnaie</span>
+                            <span class="col-price">Cours</span>
+                            <span class="col-1h">1H</span>
+                            <span class="col-vol">Volume</span>
+                            <span class="col-like"></span>
                         </div>
 
-                        <span class="col-price">{{.CurrentPrice}} $</span>
+                        <div class="header-separator"></div>
 
-                        <span class="col-1h green-text">+10%</span>
-                        <span class="col-vol">400M$</span>
+                        {{range .}}
+                        <a href="/ressource/{{.Symbol}}" class="row-link">
+                            <div class="table-row">
+                                <span class="col-rank">1</span>
+                                <div class="col-name coin-info">
+                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.Symbol}}</span>
+                                </div>
 
-                        <img src="../static/image/favorite.svg" class="heart-icon">
+                                <span class="col-price">{{.CurrentPrice}} $</span>
+
+                                <span class="col-1h green-text">+10%</span>
+                                <span class="col-vol">400M$</span>
+
+                                <img src="../static/image/favorite.svg" class="heart-icon">
+                            </div>
+                        </a>
+
+                        {{end}}
+
                     </div>
-                    {{end}}
 
                 </div>
 
             </div>
 
         </div>
+    </main>
 
-    </div>
+
 
 
 

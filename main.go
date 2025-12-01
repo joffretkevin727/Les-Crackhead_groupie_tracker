@@ -9,7 +9,7 @@ import (
 // FONCTION PRINCIPAL
 func main() {
 	r := router.New()
-	fmt.Println("http://localhost:8080/ressource")
+	fmt.Println("http://localhost:8080/list")
 	http.ListenAndServe(":8080", r)
 
 }

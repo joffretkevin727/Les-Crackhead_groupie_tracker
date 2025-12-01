@@ -3,8 +3,10 @@ package controller
 import (
 	"Les-Crackhead_groupie_tracker/api"
 	"bytes"
+	"fmt"
 	"html/template"
 	"net/http"
+	"strings"
 )
 
 var Token string = "CG-5oBeGf9b4qSv7c4ENCCz4rw8"
@@ -41,5 +43,9 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 }
 
 func Ressource(w http.ResponseWriter, r *http.Request) {
+	symbol := strings.TrimPrefix(r.URL.Path, "/ressource/")
+
+	fmt.Println("Symbole cliqué :", symbol)
+
 	RenderTemplate(w, "ressource.html", nil)
 }
