@@ -51,9 +51,9 @@ func GetTokenList() []structure.Token {
 	// 	fmt.Println("Total tracks :", decodeData.Albums[i].Totaltrack)
 	// }
 
-	for _, token := range decodeData {
-		fmt.Printf("%s : %.2f $\n", token.Symbol, token.CurrentPrice)
-	}
+	// for _, token := range decodeData {
+	// 	fmt.Printf("%s : %.2f $\n", token.Symbol, token.CurrentPrice)
+	// }
 
 	return decodeData
 
