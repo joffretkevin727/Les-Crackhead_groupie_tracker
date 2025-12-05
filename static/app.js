@@ -45,46 +45,29 @@ modal.subscribeState(state => {
   const isConnected = state.selectedNetworkId !== undefined;
   console.log("État connexion:", isConnected);
 
-  if (isConnected && btn) {
-    btn.innerText = "CONNECTÉ !";
-  }
+  // if (isConnected && btn) {
+  //   btn.innerText = "CONNECTÉ !";
+  // }
 })
 
 // 1. Écouter les changements de compte (Connexion, Déconnexion, Changement de compte)
 modal.subscribeProvider((state) => {
-
-  // Vérifie si une adresse est présente dans l'état
   if (state.address) {
     const userAddress = state.address;
     console.log("L'utilisateur est connecté avec :", userAddress);
-
-    // 2. Mettre à jour l'interface (Exemple: Changer le texte du bouton)
-    const btn = document.getElementById("account-btn");
-    if (btn) {
-      // On affiche souvent une version raccourcie (ex: 0x123...abcd)
-      const shortAddress = userAddress.slice(0, 6) + "..." + userAddress.slice(-4);
-      btn.innerText = shortAddress;
-    }
+    setBtnAddress(userAddress);
 
     fetch('/api/save-wallet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // On envoie un objet propre : { "message": "Hello from JS!" }
       body: JSON.stringify({ address: userAddress })
-    })
-    .then(res => {
-        if(res.ok) console.log("✅ Le serveur Go a bien reçu le message !");
-        else console.error("❌ Erreur serveur :", res.status);
-    })
-    .catch(err => console.error("❌ Impossible de joindre le serveur", err));
-
+    });
   } else {
-    // L'utilisateur s'est déconnecté
     console.log("Utilisateur déconnecté");
-    const btn = document.getElementById("account-btn");
-    if (btn) btn.innerText = "MY ACCOUNT";
+    setBtnAddress(null);
   }
 });
+
 
 try {
   // On demande au modal : "Est-ce qu'on a déjà une adresse en mémoire ?"
@@ -104,4 +87,16 @@ try {
 } catch (error) {
   // Parfois, si le provider n'est pas encore prêt, ça peut échouer silencieusement
   console.log("Attente de l'initialisation...");
+}
+
+function setBtnAddress(address) {
+  if (!btn) return;
+
+  if (!address) {
+    btn.innerText = "MY ACCOUNT";
+    return;
+  }
+
+  const short = address.slice(0, 6) + "..." + address.slice(-4);
+  btn.innerText = short;
 }

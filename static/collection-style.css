@@ -138,7 +138,6 @@ main {
     right: 0;
     bottom: 0;
 
-    /* même background que le body */
     background-color: #19256E;
     background-image: radial-gradient(
         circle at 50% 40%, 
@@ -146,7 +145,6 @@ main {
         rgba(25, 37, 110, 1) 70%
     );
 
-    /* pour s'intégrer parfaitement au parent */
     background-attachment: fixed;
 
     z-index: -1;
