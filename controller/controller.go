@@ -2,7 +2,10 @@ package controller
 
 import (
 	"Les-Crackhead_groupie_tracker/api"
+	"Les-Crackhead_groupie_tracker/structure"
+	"Les-Crackhead_groupie_tracker/utils"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -34,10 +37,48 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "home.html", nil)
 }
 
+func FetchData(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var data structure.DataReceived
+
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		fmt.Println("Erreur de décodage:", err)
+		http.Error(w, "JSON invalide", http.StatusBadRequest)
+		return
+	}
+
+	toSave := structure.UserData{
+		LiveUser: data.Address,
+		Address:  data.Address,
+	}
+
+	utils.SaveJson(toSave)
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"status": "success"}`))
+}
+
 func GetData() {}
 
 func Collection(w http.ResponseWriter, r *http.Request) {
+
 	data := api.GetTokenList()
+
+	for i := range data {
+		data[i].Id = i + 1
+		data[i].FormattedMarketCap = utils.FormatLargeNumber(data[i].MarketCap)
+		data[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data[i].Price_change_percentage_24h)
+		if data[i].Price_change_percentage_24h > 0 {
+			data[i].IsPricePercentagePositive = true
+		} else {
+			data[i].IsPricePercentagePositive = false
+		}
+	}
 
 	RenderTemplate(w, "collection.html", data)
 }

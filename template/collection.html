@@ -13,7 +13,7 @@
 
     <header>
         <div id="nav">
-            <img src="../static/image/CG-Symbol.svg" class="coin-logo">
+            <img src="../static/image/CG-Symbol.svg" class="logo">
             <span class="top">Lizard crypto</span>
             <span class="top">Crypto currencies</span>
 
@@ -61,8 +61,8 @@
                             <span class="col-rank">#</span>
                             <span class="col-name">Monnaie</span>
                             <span class="col-price">Cours</span>
-                            <span class="col-1h">1H</span>
-                            <span class="col-vol">Volume</span>
+                            <span class="col-1h">24H</span>
+                            <span class="col-vol">Market Cap</span>
                             <span class="col-like"></span>
                         </div>
 
@@ -71,15 +71,15 @@
                         {{range .}}
                         <a href="/ressource/{{.Symbol}}" class="row-link">
                             <div class="table-row">
-                                <span class="col-rank">1</span>
+                                <span class="col-rank">{{.Id}}</span>
                                 <div class="col-name coin-info">
                                     <img src="{{.Image}}" class="coin-logo"> <span>{{.Symbol}}</span>
                                 </div>
 
                                 <span class="col-price">{{.CurrentPrice}} $</span>
 
-                                <span class="col-1h green-text">+10%</span>
-                                <span class="col-vol">400M$</span>
+                                <span class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
+                                <span class="col-vol">{{.FormattedMarketCap}}</span>
 
                                 <img src="../static/image/favorite.svg" class="heart-icon">
                             </div>

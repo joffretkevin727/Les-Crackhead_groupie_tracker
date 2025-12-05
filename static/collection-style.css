@@ -71,7 +71,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 20px;
     overflow-y: auto;
     height: 100%;
 }
@@ -101,6 +101,7 @@ main {
     width: 90%;
     color: white;
     font-family: "Unbounded", sans-serif;
+    overflow-y: auto;
 }
 
 
@@ -118,6 +119,37 @@ main {
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    background-color: #19256E;
+    background-image: radial-gradient(
+        circle at 50% 40%, 
+        rgba(20, 70, 157, 0.4) 0%, 
+        rgba(25, 37, 110, 1) 70% 
+    );
+}
+
+.table-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    /* même background que le body */
+    background-color: #19256E;
+    background-image: radial-gradient(
+        circle at 50% 40%, 
+        rgba(20, 70, 157, 0.4) 0%, 
+        rgba(25, 37, 110, 1) 70%
+    );
+
+    /* pour s'intégrer parfaitement au parent */
+    background-attachment: fixed;
+
+    z-index: -1;
 }
 
 
@@ -143,6 +175,11 @@ main {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+
+.logo {
+    width: 63px;
+    height: 63px;
 }
 
 .green-text { color: #2ecc71; }
@@ -175,11 +212,6 @@ header {
     width: 100%;
     justify-content: center;
     align-items: center;
-}
-
-.coin-logo {
-    width: 63px;
-    height: 63px;
 }
 
 #nav {
