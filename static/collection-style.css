@@ -278,7 +278,7 @@ header {
     border-radius: 30px;
     padding: 15px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 #account-btn:hover {
