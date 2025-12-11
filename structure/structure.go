@@ -1,6 +1,7 @@
 package structure
 
 type Token struct {
+	FullName                      string  `json:"id"`
 	Symbol                        string  `json:"symbol"`
 	Image                         string  `json:"image"`
 	CurrentPrice                  float64 `json:"current_price"`

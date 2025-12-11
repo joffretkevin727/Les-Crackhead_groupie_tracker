@@ -69,11 +69,11 @@
                         <div class="header-separator"></div>
 
                         {{range .}}
-                        <a href="/ressource/{{.Symbol}}" class="row-link">
+                        <a href="/ressource/{{.FullName}}" class="row-link">
                             <div class="table-row">
                                 <span class="col-rank">{{.Id}}</span>
                                 <div class="col-name coin-info">
-                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.Symbol}}</span>
+                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
                                 </div>
 
                                 <span class="col-price">{{.CurrentPrice}} $</span>
