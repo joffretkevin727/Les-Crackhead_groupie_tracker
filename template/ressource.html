@@ -12,17 +12,17 @@
 <body>
     <header>
         <div id="nav">
-            <img src="../static/image/CG-Symbol.svg" class="coin-logo">
-            <span class="top">Lizard crypto</span>
-            <span class="top">Crypto currencies</span>
+            <img src="../static/image/CG-Symbol.svg" class="logo">
+            <a href="/home" class="top">Lizard crypto</a>
+            <a href="/list" class="top">Crypto currencies</a>
 
-            <form class="search-box">
+            <form action="/search" method="get" class="search-box">
                 <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
                     class="search-bar-logo">
                 <input type="text" placeholder="Rechercher...">
             </form>
 
-            <span class="top">About us</span>
+            <a href="/aboutus"class="top">About us</a>
             <span id="account-btn">MY ACCOUNT</span>
         </div>
 
@@ -91,6 +91,7 @@ Bitcoin has achieved mainstream adoption through spot ETF approvals, corporate t
         </div>
     </main>
     <script src="../static/chart.js"></script>
+    <script src="../static/app.js" type="module"></script>
 </body>
 
 </html>
