@@ -44,16 +44,50 @@ func GetTokenList() []structure.Token {
 	var decodeData []structure.Token
 
 	json.Unmarshal(body, &decodeData)
-	//Exemple
-	// for i := range decodeData.Albums {
-	// 	fmt.Println("Nom :", decodeData.Albums[i].Name)
-	// 	fmt.Println("Release date :", decodeData.Albums[i].Releasedate)
-	// 	fmt.Println("Total tracks :", decodeData.Albums[i].Totaltrack)
-	// }
 
-	// for _, token := range decodeData {
-	// 	fmt.Printf("%s : %.2f $\n", token.Symbol, token.CurrentPrice)
-	// }
+	return decodeData
+
+}
+
+func GetTokenInfo(tokenName string) structure.TokenInfo {
+
+	url := "https://api.coingecko.com/api/v3/coins/" + tokenName
+
+	httpClient := http.Client{
+		Timeout: time.Second * 2,
+	}
+
+	req, errReq := http.NewRequest(http.MethodGet, url, nil)
+
+	if errReq != nil {
+		fmt.Println("une erreur est survenue :", errReq.Error())
+	}
+
+	res, errResp := httpClient.Do(req)
+
+	if errResp != nil {
+		fmt.Println("une erreur est survenue : ", errResp.Error())
+		return structure.TokenInfo{}
+	}
+
+	defer res.Body.Close()
+
+	body, errBody := io.ReadAll(res.Body)
+
+	if errBody != nil {
+		fmt.Println("une erreur est survenue,", errBody.Error())
+		return structure.TokenInfo{}
+	}
+
+	//fmt.Println(string(body))
+
+	var decodeData structure.TokenInfo
+
+	json.Unmarshal(body, &decodeData)
+
+	decodeData.DescriptionFinal = decodeData.Description.En
+	decodeData.Image = decodeData.ImgUrl.Large
+	decodeData.WebUrl = decodeData.Links.Homepage[0]
 
 	return decodeData
 

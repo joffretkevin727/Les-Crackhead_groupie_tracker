@@ -88,5 +88,11 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Symbole cliqué :", symbol)
 
-	RenderTemplate(w, "ressource.html", nil)
+	data := api.GetTokenInfo(symbol)
+
+	data.Supply = utils.FormatLargeNumber(data.MarketData.TotalSupply)
+	data.VolumeUSD = utils.FormatLargeNumber(data.Tickers[0].ConvertedVolume.USD)
+	data.MarketCap = utils.FormatLargeNumber(data.MarketData.MarketCap.USD)
+
+	RenderTemplate(w, "ressource.html", data)
 }

@@ -34,10 +34,10 @@
         <div class="left-part">
             <div id="chart-container">
                 <div id="symbol">
-                    <img src="../static/image/bitcoin.svg.png" class="crypto-logo">
+                    <img src="{{.Image}}" class="crypto-logo">
                     <div id="column">
-                        <span class="info">BITCOIN</span>
-                        <p>https://bitcoin.org/en/</p>
+                        <span class="info">{{.FullName}}</span>
+                        <p>{{.WebUrl}}</p>
                     </div>
                     
                 </div>
@@ -58,17 +58,17 @@
 
                 <div id="table-row">
                     <span class="gray">Market cap</span>
-                    <span class="info">1 807 505 728 720 $US</span>
+                    <span class="info">{{.MarketCap}} $US</span>
                 </div>
                 <div id="stat-seperator"></div>
                 <div id="table-row">
-                    <span class="gray">Volume 24h</span>
-                    <span class="info">57 197 741 764$US</span>
+                    <span class="gray">Volume</span>
+                    <span class="info">{{.VolumeUSD}} $US</span>
                 </div>
                 <div id="stat-seperator"></div>
                 <div id="table-row">
                     <span class="gray">Total supply</span>
-                    <span class="info">19 955 240</span>
+                    <span class="info">{{.Supply}}</span>
                 </div>
                 <div id="stat-seperator"></div>
                 <div id="table-row">
@@ -78,13 +78,7 @@
                 <div id="stat-seperator"></div>
 
                 <div class="story">Infos</div>
-                <p id="text-block">Bitcoin is the world's first decentralized cryptocurrency that enables peer-to-peer electronic cash transactions without intermediaries like banks or governments.
-
-Bitcoin operates on a blockchain secured by proof-of-work mining and the SHA-256 cryptographic algorithm, making it virtually impossible to counterfeit or double-spend.
-
-With a fixed supply cap of 21 million coins and programmatic halvings every four years, Bitcoin is designed as a deflationary digital asset often called "digital gold."
-
-Bitcoin has achieved mainstream adoption through spot ETF approvals, corporate treasury holdings, and acceptance by governments and institutions worldwide.</p>
+                <p id="text-block">{{.DescriptionFinal}}</p>
 
             </div>
 
