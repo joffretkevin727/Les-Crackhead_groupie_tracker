@@ -31,67 +31,70 @@
 
     <main>
 
-            <div class="horizontal-seperator"></div>
+        <div class="horizontal-seperator"></div>
 
-            <div id="row">
+        <div id="row">
 
-                <div class="left-box">
-                    <p id="filter">FILTER</p>
-                    <div>
-                        <input type="checkbox" id="layer1" name="layer1" checked />
-                        <label for="layer1">Layer 1</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="layer2" name="layer2" checked />
-                        <label for="layer2">Layer 2</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="memecoin" name="memecoin" checked />
-                        <label for="memecoin">Memecoin</label>
-                    </div>
+            <div class="left-box">
+                <p id="filter">FILTER</p>
+                <div>
+                    <input type="checkbox" id="layer1" name="layer1" checked />
+                    <label for="layer1">Layer 1</label>
                 </div>
+                <div>
+                    <input type="checkbox" id="layer2" name="layer2" checked />
+                    <label for="layer2">Layer 2</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="memecoin" name="memecoin" checked />
+                    <label for="memecoin">Memecoin</label>
+                </div>
+            </div>
 
-                <div class="vertical-seperator"></div>
+            <div class="vertical-seperator"></div>
 
-                <div class="right-box">
+            <div class="right-box">
 
-                    <div class="crypto-table">
+                <div class="crypto-table">
 
-                        <div class="table-header">
-                            <span class="col-rank">#</span>
-                            <span class="col-name">Monnaie</span>
-                            <span class="col-price">Cours</span>
-                            <span class="col-1h">24H</span>
-                            <span class="col-vol">Market Cap</span>
-                            <span class="col-like"></span>
-                        </div>
+                    <div class="table-header">
+                        <a href="/list?order=desc" class="col-rank"># 🔽</a>
+                        <a href="/list?order=asc" class="col-rank"># 🔼</a>
 
-                        <div class="header-separator"></div>
-
-                        {{range .}}
-                        <a href="/ressource/{{.FullName}}" class="row-link">
-                            <div class="table-row">
-                                <span class="col-rank">{{.Id}}</span>
-                                <div class="col-name coin-info">
-                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
-                                </div>
-
-                                <span class="col-price">{{.CurrentPrice}} $</span>
-
-                                <span class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
-                                <span class="col-vol">{{.FormattedMarketCap}}</span>
-
-                                <img src="../static/image/favorite.svg" class="heart-icon">
-                            </div>
-                        </a>
-
-                        {{end}}
-
+                        <span class="col-name">Monnaie</span>
+                        <span class="col-price">Cours</span>
+                        <span class="col-1h">24H</span>
+                        <span class="col-vol">Market Cap</span>
+                        <span class="col-like"></span>
                     </div>
+
+                    <div class="header-separator"></div>
+
+                    {{range .}}
+                    <a href="/ressource/{{.FullName}}" class="row-link">
+                        <div class="table-row">
+                            <span class="col-rank">{{.Id}}</span>
+                            <div class="col-name coin-info">
+                                <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
+                            </div>
+
+                            <span class="col-price">{{.CurrentPrice}} $</span>
+
+                            <span
+                                class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
+                            <span class="col-vol">{{.FormattedMarketCap}}</span>
+
+                            <img src="../static/image/favorite.svg" class="heart-icon">
+                        </div>
+                    </a>
+
+                    {{end}}
 
                 </div>
 
             </div>
+
+        </div>
     </main>
 
     <script src="../static/app.js" type="module"></script>

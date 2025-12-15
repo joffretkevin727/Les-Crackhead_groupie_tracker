@@ -11,6 +11,7 @@ type Token struct {
 	Id                            int
 	FormattedMarketCap            string
 	IsPricePercentagePositive     bool
+	Rank                          int
 }
 
 type TokenInfo struct {

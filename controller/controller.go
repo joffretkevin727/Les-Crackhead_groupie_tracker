@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"sort"
 	"strings"
 )
 
@@ -95,4 +96,25 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 	data.MarketCap = utils.FormatLargeNumber(data.MarketData.MarketCap.USD)
 
 	RenderTemplate(w, "ressource.html", data)
+}
+
+func CollectionHandler(w http.ResponseWriter, r *http.Request) {
+	data := api.GetTokenList()
+	order := r.URL.Query().Get("order")
+
+	sort.Slice(data, func(i, j int) bool {
+		if order == "asc" {
+			return data[i].Id < data[j].Id
+		}
+		return data[i].Id > data[j].Id
+	})
+
+	for i := range data {
+		data[i].Rank = i + 1
+		data[i].FormattedMarketCap = utils.FormatLargeNumber(data[i].MarketCap)
+		data[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data[i].Price_change_percentage_24h)
+		data[i].IsPricePercentagePositive = data[i].Price_change_percentage_24h > 0
+	}
+
+	RenderTemplate(w, "collection.html", data)
 }
