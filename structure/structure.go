@@ -66,11 +66,7 @@ type Filters struct {
 	Memecoin bool
 }
 
-type PageData struct {
-	Projects []Token
-	Filters  Filters
-}
-
 type Data struct {
-	Tokens []Token
+	Tokens  []Token
+	Filters Filters
 }

@@ -75,6 +75,7 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		data.Tokens[i].Id = i + 1
 		data.Tokens[i].FormattedMarketCap = utils.FormatLargeNumber(data.Tokens[i].MarketCap)
 		data.Tokens[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data.Tokens[i].Price_change_percentage_24h)
+		data.Tokens[i].Type = "layer1"
 		if data.Tokens[i].Price_change_percentage_24h > 0 {
 			data.Tokens[i].IsPricePercentagePositive = true
 		} else {
@@ -99,23 +100,29 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "ressource.html", data)
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	// Récupère les filtres depuis les checkbox
 	filters := structure.Filters{
 		Layer1:   r.URL.Query().Has("layer1"),
 		Layer2:   r.URL.Query().Has("layer2"),
 		Memecoin: r.URL.Query().Has("memecoin"),
 	}
 
-	filtered := []structure.Token{}
-
-	for _, p := range data.Tokens {
-		if (p.Type == "layer1" && filters.Layer1) ||
-			(p.Type == "layer2" && filters.Layer2) ||
-			(p.Type == "memecoin" && filters.Memecoin) {
-			filtered = append(filtered, p)
+	// Filtrer la liste des tokens
+	filtered := []structure.Token{} // start with empty slice
+	for _, t := range data.Tokens {
+		if (t.Type == "layer1" && filters.Layer1) ||
+			(t.Type == "layer2" && filters.Layer2) ||
+			(t.Type == "memecoin" && filters.Memecoin) {
+			filtered = append(filtered, t)
 		}
 	}
 
-	RenderTemplate(w, "collection.html", filtered)
+	// Passe la liste filtrée et les filtres au template
+	pageData := structure.Data{
+		Tokens:  filtered,
+		Filters: filters,
+	}
+
+	RenderTemplate(w, "collection.html", pageData)
 }
