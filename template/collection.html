@@ -38,14 +38,11 @@
             <div class="left-box">
                 <p id="filter">FILTER</p>
                 <form method="GET" action="/filter">
-                    <div>
+                    <div class="white">
                         <input type="checkbox" name="layer1" {{if .Filters.Layer1}}checked{{end}}> Layer 1
                     </div>
-                    <div>
+                    <div class="white">
                         <input type="checkbox" name="layer2" {{if .Filters.Layer2}}checked{{end}}> Layer 2
-                    </div>
-                    <div>
-                        <input type="checkbox" name="memecoin" {{if .Filters.Memecoin}}checked{{end}}> Memecoin
                     </div>
                     <button type="submit">Filtrer</button>
                 </form>

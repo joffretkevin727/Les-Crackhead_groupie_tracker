@@ -189,6 +189,10 @@ main {
     height: 40px;
 }
 
+.white {
+    color: white;
+}
+
 .left-box label {
     font-family: "Unbounded", sans-serif;
     color: white;

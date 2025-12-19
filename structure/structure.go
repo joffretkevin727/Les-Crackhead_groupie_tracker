@@ -45,8 +45,9 @@ type DataReceived struct {
 }
 
 type UserData struct {
-	LiveUser string `json:"liveuser"`
-	Address  string `json:"address"`
+	LiveUser   string `json:"liveuser"`
+	Address    string `json:"address"`
+	LikedToken []string
 }
 
 type MarketData struct {
