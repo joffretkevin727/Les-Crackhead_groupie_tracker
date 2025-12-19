@@ -15,6 +15,10 @@ import (
 var Token string = "CG-5oBeGf9b4qSv7c4ENCCz4rw8"
 var Urlapi string = "https://api.coingecko.com/api/v3/"
 
+var data = &structure.Data{
+	Tokens: api.GetTokenList(),
+}
+
 // CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
 	template := template.Must(template.ParseFiles("template/" + filename))
@@ -67,16 +71,14 @@ func GetData() {}
 
 func Collection(w http.ResponseWriter, r *http.Request) {
 
-	data := api.GetTokenList()
-
-	for i := range data {
-		data[i].Id = i + 1
-		data[i].FormattedMarketCap = utils.FormatLargeNumber(data[i].MarketCap)
-		data[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data[i].Price_change_percentage_24h)
-		if data[i].Price_change_percentage_24h > 0 {
-			data[i].IsPricePercentagePositive = true
+	for i := range data.Tokens {
+		data.Tokens[i].Id = i + 1
+		data.Tokens[i].FormattedMarketCap = utils.FormatLargeNumber(data.Tokens[i].MarketCap)
+		data.Tokens[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data.Tokens[i].Price_change_percentage_24h)
+		if data.Tokens[i].Price_change_percentage_24h > 0 {
+			data.Tokens[i].IsPricePercentagePositive = true
 		} else {
-			data[i].IsPricePercentagePositive = false
+			data.Tokens[i].IsPricePercentagePositive = false
 		}
 	}
 
@@ -95,4 +97,25 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 	data.MarketCap = utils.FormatLargeNumber(data.MarketData.MarketCap.USD)
 
 	RenderTemplate(w, "ressource.html", data)
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+
+	filters := structure.Filters{
+		Layer1:   r.URL.Query().Has("layer1"),
+		Layer2:   r.URL.Query().Has("layer2"),
+		Memecoin: r.URL.Query().Has("memecoin"),
+	}
+
+	filtered := []structure.Token{}
+
+	for _, p := range data.Tokens {
+		if (p.Type == "layer1" && filters.Layer1) ||
+			(p.Type == "layer2" && filters.Layer2) ||
+			(p.Type == "memecoin" && filters.Memecoin) {
+			filtered = append(filtered, p)
+		}
+	}
+
+	RenderTemplate(w, "collection.html", filtered)
 }

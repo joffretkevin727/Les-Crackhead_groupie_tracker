@@ -11,6 +11,7 @@ type Token struct {
 	Id                            int
 	FormattedMarketCap            string
 	IsPricePercentagePositive     bool
+	Type                          string
 }
 
 type TokenInfo struct {
@@ -57,4 +58,19 @@ type MarketData struct {
 	MarketCap         struct {
 		USD float64 `json:"usd"`
 	} `json:"market_cap"`
+}
+
+type Filters struct {
+	Layer1   bool
+	Layer2   bool
+	Memecoin bool
+}
+
+type PageData struct {
+	Projects []Token
+	Filters  Filters
+}
+
+type Data struct {
+	Tokens []Token
 }
