@@ -7,6 +7,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"strconv"
 )
 
 func Sort(list []structure.Token) []structure.Token {
@@ -66,5 +67,27 @@ func FormatLargeNumber(n float64) string {
 		return fmt.Sprintf("%.2fK", n/1_000)
 	default:
 		return fmt.Sprintf("%.0f", n)
+	}
+}
+
+func FormatLargeNumberInt(s string) int {
+	n, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return 0
+	}
+
+	abs := math.Abs(n)
+
+	switch {
+	case abs >= 1_000_000_000_000: // T
+		return int(n / 1_000_000_000_000)
+	case abs >= 1_000_000_000: // B
+		return int(n / 1_000_000_000)
+	case abs >= 1_000_000: // M
+		return int(n / 1_000_000)
+	case abs >= 1_000: // K
+		return int(n / 1_000)
+	default:
+		return int(n)
 	}
 }
