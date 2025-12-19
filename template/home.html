@@ -19,39 +19,37 @@
 
     </header>
     <main>
-        <div id="home-content">
-
+        <div class="search-bar">
             <form action="/search" method="get" class="search-box">
                 <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
                     class="search-bar-logo">
-                <input type="text" placeholder="Rechercher...">
+                <input type="text" placeholder="Research...">
             </form>
-
-            <form action="/list" method="get" class="button-collection">
-                <img src="">
-                <button id="crypto-market">CRYPTO MARKET</button>
-            </form>
-
         </div>
+        <div class="crypto-market">
+            <img src="../static/image/Mask group.svg" class="img-crypto-market">
+            <form action="/list" method="get" class="form-crypto-market">
+                <button id="button-crypto-market">CRYPTO MARKET</button>
+            </form>
+        </div>
+        <br>
     </main>
     <script src="../static/app.js" type="module"></script>
     <footer>
-        <p>footer</p>
-        <h1>LIZARD CRYPTO</h1>
-        <p>Ce projet est une application web dédiée à la visualisation des données de marché des crypto-monnaies. Il
-            présente une sélection des 100 principales crypto-monnaies classées par capitalisation boursière.</p>
-        <p>L'intégralité des données présentées est récupérée via la CoinGecko API. Cette source a été choisie pour
-            la fiabilité et la richesse de ses données de marché.</p>
-        <p>Documentation de l'API : https://docs.coingecko.com/v3.0.1/reference/authentication</p>
-        <p>Les Collections choisis sont des crypto connues du marchée</p>
-        <p>Nous utilisons principalement les endpoints suivants pour construire la structure et le contenu des pages
-            :</p>
-        <div id="documentation-info">
-            <h2>Ressources et Endpoints</h2>
-            <p>- Les 100 crypto les plus celebres</p>
-            <p>- https://api.coingecko.com/api/v3/coins/markets </p>
-            <p>- monnaie,cours,24h,market cap</p>
-
+        <div class="footer-contener">
+            <div class="footer-left">
+                <div class="up">
+                <p>lizard crypto</p>
+                </div>
+                <div class="down">
+                    <p>La solution crypto pour toute vos recherche</p>
+                </div>
+            </div>
+        <div class="footer-right">
+            <p>Lien</p>
+        <a href="/aboutus">ABOUT US</a>
+        </div>
+        </div>
     </footer>
 </body>
 

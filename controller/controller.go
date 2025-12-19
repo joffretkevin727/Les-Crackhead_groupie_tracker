@@ -90,3 +90,11 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 
 	RenderTemplate(w, "ressource.html", nil)
 }
+
+func AboutUs(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	RenderTemplate(w, "aboutus.html", nil)
+}

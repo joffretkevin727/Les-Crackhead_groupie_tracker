@@ -1,0 +1,311 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #19256E;
+    background-image: radial-gradient(circle at 50% 40%,
+            rgba(20, 70, 157, 0.4) 0%,
+            rgba(25, 37, 110, 1) 70%);
+    font-family: "Unbounded", sans-serif;
+    color: white
+}
+
+@font-face {
+    font-family: "Unbounded";
+    src: url("../static/fonts/unbounded-medium.ttf") format("truetype");
+    font-weight: medium;
+    font-style: normal;
+}
+
+
+header {
+    flex-shrink: 0;
+    margin: 15px 0px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px #fff solid;
+}
+
+#nav {
+    display: flex;
+    /* On pousse le logo tout à gauche et le bouton tout à droite */
+    justify-content: space-between; 
+    align-items: center;
+    width: 70%; 
+    height: 100%;
+    /* TRÈS IMPORTANT : Définit le repère pour le titre absolu */
+    position: relative; 
+}
+
+.logo {
+    width: 63px;
+    height: 63px;
+}
+
+#lizard-crypto {
+    /* Sort du flux normal */
+    position: absolute; 
+    
+    /* Place le point de départ du texte à 50% du conteneur parent */
+    left: 50%; 
+    
+    /* Recule le texte de 50% de sa propre largeur pour être pile au centre */
+    transform: translateX(-50%); 
+    
+    /* Tes styles de texte existants */
+    font-size: 50px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap; /* Empêche le titre de se casser sur deux lignes */
+}
+
+/* Ajoutez ce style pour la balise main */
+main {
+    display: flex;
+    flex-direction: column; /* Empile les éléments verticalement */
+    align-items: center;    /* CENTRE tout ce qu'il contient sur l'axe vertical (la "caméra") */
+    width: 100%;
+    flex: 1;                /* Prend l'espace disponible */
+}
+
+/* La barre de recherche elle-même */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;       /* Prend toute la largeur pour permettre le centrage */
+    margin: 40px 0;    /* Espacement en haut et en bas */
+}
+
+/* Assurez-vous que la bannière a bien margin auto ou qu'elle est centrée par le main */
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-box {
+    display: flex;
+    width: 30%;
+    height: 110%;
+    border: 2px solid white;
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    color: #000;
+    
+}
+
+.search-box button {
+    display: flex;
+    padding: 10px 15px;
+    border: none;
+    background: white;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-box input::placeholder {
+    color: rgb(210, 210, 210);
+    opacity: 0.8;
+    font-family: "Unbounded";
+}
+
+.search-bar-logo {
+    margin-left: 20px;
+    fill: #4BCC00;
+}
+
+
+
+.top {
+    font-family: "Unbounded", sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.top:hover {
+    color: #4BCC00;
+}
+
+#account-btn {
+    font-family: "unbounded", sans-serif;
+    color: white;
+    background-color: #4BCC00;
+    border-radius: 30px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#account-btn:hover {
+    color: white;
+    background-color: #40ac02;
+}
+/* 1. Conteneur principal (La Bannière) */
+.crypto-market {
+    /* Propriétés générales de la bannière */
+    width: 1096px;
+    height: 298px;
+    background-color: white; /* Ou couleur de fond de l'image */
+    border-radius: 60px; 
+    margin: 0px auto; /* Centre la bannière horizontalement dans la page */
+    
+    /* Établit le contexte de positionnement pour les enfants (image et bouton) */
+    position: relative; 
+    overflow: hidden; /* Important si les décors doivent être masqués aux bords */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Centre le texte "CRYPTO MARKET" (qui est dans le bouton) */
+}
+
+/* 2. Image de Décoration (Positionnement) */
+.img-crypto-market {
+    position: absolute;
+    /* Positionnez l'image dans le coin où vous la voulez, ou sur toute la zone */
+    width: 1096px; /* S'étend sur toute la largeur */
+    height: 298px; /* S'étend sur toute la hauteur */
+    object-fit: cover; /* Assure que l'image couvre le conteneur */
+    z-index: 1; /* L'image est en dessous du bouton */
+}
+
+/* 3. Formulaire pour le Bouton (doit couvrir tout le conteneur) */
+.form-crypto-market {
+    /* Le formulaire doit couvrir toute la zone pour être cliquable */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* S'assure d'être au-dessus de l'image */
+    
+    /* Active le Flexbox pour centrer le texte du bouton */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#button-crypto-market {
+    background-color: transparent; 
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family:"unbounded", sans-serif;
+    font-weight: bold;
+    font-size: 2.5rem; 
+    color: #000000;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- SÉLECTEUR PRINCIPAL : Conteneur du Footer --- */
+
+footer {
+    /* Le footer est le parent de .footer-contener */
+    width: 100%;
+    flex-shrink: 0; /* Empêche le footer de se réduire */
+    background-color: #0a1455; /* Un bleu très foncé, légèrement différent du fond de page */
+    padding: 30px 5%; /* Espacement interne pour les côtés */
+    color: white; /* Couleur de base du texte */
+}
+
+.footer-contener {
+    display: flex;
+    justify-content: space-between; /* Place les deux blocs (gauche/droite) aux extrémités */
+    align-items: flex-start; /* Alignement en haut */
+    max-width: 1400px; /* Limite la largeur max sur les très grands écrans */
+    margin: 0 auto; /* Centre le conteneur dans le footer */
+    font-family: "Unbounded", sans-serif;
+}
+
+/* --- PARTIE GAUCHE : Logo et Slogan --- */
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    /* Assure que la partie gauche prend plus de place si nécessaire */
+    flex: 2; 
+    padding-right: 20px;
+}
+
+.footer-left p {
+    margin: 0; /* Réinitialise les marges des paragraphes dans le footer */
+}
+
+/* Style du titre "Lizard Crypto" */
+.footer-left .up p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4BCC00; /* Vert d'accentuation */
+    margin-bottom: 5px;
+}
+
+/* Style du slogan */
+.footer-left .down p {
+    font-size: 0.9rem;
+    color: #AEAEAE; /* Gris clair pour le texte secondaire */
+    max-width: 350px;
+    line-height: 1.4;
+}
+
+/* --- PARTIE DROITE : Liens --- */
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    text-align: right; /* Aligne le texte du bloc à droite */
+    flex: 1; 
+}
+
+/* Titre "Lien" */
+.footer-right p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: white;
+}
+
+/* Style des liens */
+.footer-right a {
+    font-family: sans-serif; /* Police normale pour le lien */
+    color: #AEAEAE; /* Gris clair */
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    transition: color 0.2s;
+}
+
+.footer-right a:hover {
+    color: #4BCC00; /* Vert au survol */
+    text-decoration: underline;
+}
