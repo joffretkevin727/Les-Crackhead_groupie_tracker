@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 html, body {
     background-color: #19256E;
     background-image: radial-gradient(
@@ -27,14 +30,20 @@ body {
 }
 
 header {
-    margin: 15px 0px 15px 0px;
+    flex-shrink: 0;
+    margin: 15px 0px;
     display: flex;
-    width: 100vw;
+    width: 100%;
     justify-content: center;
     align-items: center;
 }
 
 .coin-logo {
+    width: 63px;
+    height: 63px;
+}
+
+.logo {
     width: 63px;
     height: 63px;
 }
@@ -45,39 +54,6 @@ header {
     align-items: center;
     width: 70%;
     height: 100%;
-}
-
-.search-box {
-    display: flex;
-    width: 250px;
-    border: 2px solid white;   
-    border-radius: 25px;
-    overflow: hidden;
-    background-color: #dfffcf00;   
-}
-
-.search-box input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    outline: none;
-    background-color: #dfffcf00;  
-    color: #2F6E00;          
-}
-
-.search-box button {
-    padding: 10px 15px;
-    border: none;
-    background: white;      
-    color: white;               
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.search-box input::placeholder {
-    color: white;  
-    opacity: 0.8;
-    font-family: "Unbounded";   
 }
 
 .search-bar-logo {
@@ -92,6 +68,7 @@ header {
     color: white;
     cursor: pointer;
     font-size: 1rem;
+    text-decoration: none;
 }
 
 .top:hover {
@@ -99,13 +76,13 @@ header {
 }
 
 #account-btn{
-    font-family: "unbounded", sans-serif;
+    font-family: "Unbounded", sans-serif;
     color: white;
     background-color: #4BCC00;
     border-radius: 30px;
     padding: 15px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 #account-btn:hover {
@@ -237,4 +214,38 @@ main {
 #column p:hover {
     text-decoration: underline;
     opacity: 0.6;
+}
+
+.search-box {
+    display: flex;
+    width: 250px;
+    border: 2px solid white;   
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #fff;   
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: #fff;  
+    color: #000;          
+}
+
+.search-box button {
+    padding: 10px 15px;
+    border: none;
+    background: white;      
+    color: white;               
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-box input::placeholder {
+    color: rgb(210, 210, 210);  
+    opacity: 0.8;
+    font-family: "Unbounded"; 
+      
 }
