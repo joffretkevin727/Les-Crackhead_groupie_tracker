@@ -101,7 +101,7 @@ main {
     width: 90%;
     color: white;
     font-family: "Unbounded", sans-serif;
-    overflow-y: auto;
+    overflow-y: visible;
 }
 
 
