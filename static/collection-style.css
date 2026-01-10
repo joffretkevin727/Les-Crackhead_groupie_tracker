@@ -71,7 +71,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
     overflow-y: auto;
     height: 100%;
 }
@@ -102,6 +101,7 @@ main {
     color: white;
     font-family: "Unbounded", sans-serif;
     overflow-y: visible;
+    padding-top: 20px;
 }
 
 
@@ -226,7 +226,7 @@ header {
     border: 2px solid white;   
     border-radius: 25px;
     overflow: hidden;
-    background-color: #dfffcf00;   
+    background-color: #fff;   
 }
 
 .search-box input {
@@ -234,8 +234,8 @@ header {
     padding: 10px;
     border: none;
     outline: none;
-    background-color: #dfffcf00;  
-    color: #2F6E00;          
+    background-color: #fff;  
+    color: #000;          
 }
 
 .search-box button {
@@ -248,11 +248,11 @@ header {
 }
 
 .search-box input::placeholder {
-    color: white;  
+    color: rgb(210, 210, 210);  
     opacity: 0.8;
-    font-family: "Unbounded";   
+    font-family: "Unbounded"; 
+      
 }
-
 .search-bar-logo {
     margin-left: 20px;
     fill: #4BCC00;
@@ -265,6 +265,7 @@ header {
     color: white;
     cursor: pointer;
     font-size: 1rem;
+    text-decoration: none;
 }
 
 .top:hover {
@@ -272,7 +273,7 @@ header {
 }
 
 #account-btn{
-    font-family: "unbounded", sans-serif;
+    font-family: "Unbounded", sans-serif;
     color: white;
     background-color: #4BCC00;
     border-radius: 30px;

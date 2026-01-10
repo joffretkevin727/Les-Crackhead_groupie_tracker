@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strconv"
 )
 
 func Sort(list []structure.Token) []structure.Token {
@@ -78,4 +79,26 @@ func AddToJSON(toAdd structure.UserData) {
 	}
 
 	fmt.Println("JSON mis à jour avec succès !")
+}
+
+func FormatLargeNumberInt(s string) int {
+	n, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return 0
+	}
+
+	abs := math.Abs(n)
+
+	switch {
+	case abs >= 1_000_000_000_000: // T
+		return int(n / 1_000_000_000_000)
+	case abs >= 1_000_000_000: // B
+		return int(n / 1_000_000_000)
+	case abs >= 1_000_000: // M
+		return int(n / 1_000_000)
+	case abs >= 1_000: // K
+		return int(n / 1_000)
+	default:
+		return int(n)
+	}
 }
