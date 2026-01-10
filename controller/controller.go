@@ -54,10 +54,10 @@ func FetchData(w http.ResponseWriter, r *http.Request) {
 
 	toSave := structure.UserData{
 		LiveUser: data.Address,
-		Address:  data.Address,
+		Address:  "data.Address",
 	}
 
-	utils.SaveJson(toSave)
+	utils.AddToJSON(toSave)
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"status": "success"}`))
