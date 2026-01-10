@@ -38,7 +38,6 @@ func FormatLargeNumber(n float64) string {
 	}
 }
 
-<<<<<<< HEAD
 func saveJSON(fileName string, data interface{}) error { // Convertir les données en JSON
 
 	bytes, err := json.MarshalIndent(data, "", "  ")
@@ -82,8 +81,6 @@ func AddToJSON(toAdd structure.UserData) {
 	fmt.Println("JSON mis à jour avec succès !")
 }
 
-=======
->>>>>>> e7c8355745d0c23624898a5a5de73d62c0b4d5d3
 func FormatLargeNumberInt(s string) int {
 	n, err := strconv.ParseFloat(s, 64)
 	if err != nil {
