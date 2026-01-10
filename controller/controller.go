@@ -127,6 +127,29 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "collection.html", pageData)
 }
 
+var favorites = []string{}
+
+func FavoritesHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	token := r.FormValue("token")
+	if token == "" {
+		http.Error(w, "Token missing", http.StatusBadRequest)
+		return
+	}
+
+	// Ajouter le token à la liste des favoris
+	favorites = append(favorites, token) // ou utiliser saveJSON pour persister
+
+	fmt.Println(favorites)
+
+	// Rediriger vers la page actuelle pour recharger la table
+	http.Redirect(w, r, r.Header.Get("Referer"), http.StatusSeeOther)
+}
+
 func AboutUs(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)

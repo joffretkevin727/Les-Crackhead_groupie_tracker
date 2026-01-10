@@ -23,7 +23,7 @@
                 <input type="text" placeholder="Research...">
             </form>
 
-            <a href="/aboutus"class="top">About us</a>
+            <a href="/aboutus" class="top">About us</a>
             <span id="account-btn">MY ACCOUNT</span>
         </div>
 
@@ -36,20 +36,20 @@
         <div id="row">
 
             <div class="left-box">
-                    <p id="filter">FILTER</p>
-                    <div>
-                        <input type="checkbox" id="layer1" name="layer1" checked />
-                        <label for="layer1">Layer 1</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="layer2" name="layer2" checked />
-                        <label for="layer2">Layer 2</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="memecoin" name="memecoin" checked />
-                        <label for="memecoin">Memecoin</label>
-                    </div>
+                <p id="filter">FILTER</p>
+                <div>
+                    <input type="checkbox" id="layer1" name="layer1" checked />
+                    <label for="layer1">Layer 1</label>
                 </div>
+                <div>
+                    <input type="checkbox" id="layer2" name="layer2" checked />
+                    <label for="layer2">Layer 2</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="memecoin" name="memecoin" checked />
+                    <label for="memecoin">Memecoin</label>
+                </div>
+            </div>
 
             <div class="vertical-seperator"></div>
 
@@ -69,24 +69,40 @@
                     <div class="header-separator"></div>
 
                     {{range .Tokens}}
-                    <a href="/ressource/{{.FullName}}" class="row-link">
-                        <div class="table-row">
-                            <span class="col-rank">{{.Id}}</span>
-                            <div class="col-name coin-info">
-                                <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
-                            </div>
+                    <div class="table-row">
+                        <span class="col-rank">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.Id}}</a>
+                        </span>
 
-                            <span class="col-price">{{.CurrentPrice}} $</span>
-
-                            <span
-                                class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
-                            <span class="col-vol">{{.FormattedMarketCap}}</span>
-
-                            <img src="../static/image/favorite.svg" class="heart-icon">
+                        <div class="col-name coin-info">
+                            <img src="{{.Image}}" class="coin-logo">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FullName}}</a>
                         </div>
-                    </a>
 
+                        <span class="col-price">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.CurrentPrice}} $</a>
+                        </span>
+
+                        <span class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FormattedPrice_percentage_24h}}%</a>
+                        </span>
+
+                        <span class="col-vol">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FormattedMarketCap}}</a>
+                        </span>
+
+                        <span class="col-like">
+                            <form method="POST" action="/favorites">
+                                <input type="hidden" name="token" value="{{.FullName}}">
+                                <button type="submit"
+                                    style="background: none; border: none; cursor: pointer; padding: 0;">
+                                    <img src="../static/image/favorite.svg" class="heart-icon">
+                                </button>
+                            </form>
+                        </span>
+                    </div>
                     {{end}}
+
 
                 </div>
 
