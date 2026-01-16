@@ -18,6 +18,7 @@ var Urlapi string = "https://api.coingecko.com/api/v3/"
 var data = &structure.Data{
 	Tokens: api.GetTokenList(),
 }
+var UserFavorites = make(map[string]bool)
 
 // CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
@@ -133,4 +134,46 @@ func AboutUs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	RenderTemplate(w, "aboutus.html", nil)
+}
+
+func Profil(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var favoriteTokens []structure.Token
+
+	for _, t := range data.Tokens {
+		if UserFavorites[t.FullName] {
+			favoriteTokens = append(favoriteTokens, t)
+		}
+	}
+
+	pageData := structure.Data{
+		Tokens: favoriteTokens,
+	}
+
+	RenderTemplate(w, "profil.html", pageData)
+}
+
+func AddFavorite(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/list", http.StatusSeeOther)
+		return
+	}
+
+	// Récupère l'ID envoyé par le formulaire
+	tokenName := r.FormValue("tokenName")
+
+	if tokenName != "" {
+		// Toggle les favoris
+		if UserFavorites[tokenName] {
+			delete(UserFavorites, tokenName)
+		} else {
+			UserFavorites[tokenName] = true
+		}
+	}
+
+	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
+	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
 }

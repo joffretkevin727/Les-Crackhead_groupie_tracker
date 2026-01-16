@@ -23,7 +23,7 @@
                 <input type="text" placeholder="Research...">
             </form>
 
-            <a href="/aboutus"class="top">About us</a>
+            <a href="/aboutus" class="top">About us</a>
             <span id="account-btn">MY ACCOUNT</span>
         </div>
 
@@ -70,23 +70,24 @@
                     <div class="header-separator"></div>
 
                     {{range .Tokens}}
-                    <a href="/ressource/{{.FullName}}" class="row-link">
-                        <div class="table-row">
-                            <span class="col-rank">{{.Id}}</span>
-                            <div class="col-name coin-info">
-                                <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
+                    <div class="row-container">
+                        <a href="/ressource/{{.FullName}}" class="row-link">
+                            <div class="table-row">
+                                <span class="col-rank">{{.Id}}</span>
+                                <div class="col-name coin-info">
+                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
+                                </div>
+                                <span class="col-price">{{.CurrentPrice}} $</span>
+                                <span
+                                    class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
+                                <span class="col-vol">{{.FormattedMarketCap}}</span>
                             </div>
-
-                            <span class="col-price">{{.CurrentPrice}} $</span>
-
-                            <span
-                                class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
-                            <span class="col-vol">{{.FormattedMarketCap}}</span>
-
-                            <img src="../static/image/favorite.svg" class="heart-icon">
-                        </div>
-                    </a>
-
+                        </a>
+                        <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
+                        <input type="hidden" name="tokenName" value="{{.FullName}}">
+                        <button class="favorite-btn" data-id="{{.Id}}" aria-label="Favorite"></button>
+                        </form>
+                    </div>
                     {{end}}
 
                 </div>

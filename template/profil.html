@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Title</title>
+    <link rel="stylesheet" href="../static/collection-style.css">
+
+</head>
+
+<body>
+
+    <header>
+        <div id="nav">
+            <img src="../static/image/CG-Symbol.svg" class="logo">
+            <a href="/home" class="top">Lizard crypto</a>
+            <a href="/list" class="top">Crypto currencies</a>
+
+            <form action="/list" method="get" class="search-box">
+                <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                    class="search-bar-logo">
+                <input type="text" placeholder="Research...">
+            </form>
+
+            <a href="/aboutus"class="top">About us</a>
+            <span id="account-btn">MY ACCOUNT</span>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="profile-container">
+        <div class="profile-header">
+            <div class="avatar-circle">
+                <img src="../static/image/lezard.jpg" alt="Profile">
+            </div>
+            <h2 class="username">UserLizard_0</h2>
+            <p class="join-date">Here since : 16 Jan. 2026</p>
+        </div>
+
+        <div class="horizontal-seperator"></div>
+
+        <div class="favorites-section">
+    <h3>MES FAVORIS</h3>
+    <div class="favorites-list">
+        {{range .Tokens}}
+            <a href="/ressource/{{.FullName}}" class="row-link">
+                    <div class="table-row">
+                        <span class="col-rank">{{.Id}}</span>
+                        <div class="col-name coin-info">
+                            <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
+                        </div>
+                        <span class="col-price">{{.CurrentPrice}} $</span>
+                        <span
+                            class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
+                        <span class="col-vol">{{.FormattedMarketCap}}</span>
+                    </div>
+                </a>
+        {{else}}
+            <p>Vous n'avez pas encore de favoris.</p>
+        {{end}}
+    </div>
+</div>
+    </div>
+    </main>
+    <script src="../static/app.js" type="module"></script>
+</body>
+</html>
