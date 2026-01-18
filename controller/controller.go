@@ -101,27 +101,48 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	// Récupère les filtres depuis les checkbox
-	filters := structure.Filters{
-		Layer1:   r.URL.Query().Has("layer1"),
-		Layer2:   r.URL.Query().Has("layer2"),
-		Memecoin: r.URL.Query().Has("memecoin"),
+
+	filterSup1B := r.URL.Query().Has("sup1b")
+	filterInf1B := r.URL.Query().Has("inf1b")
+	filterPos24h := r.URL.Query().Has("positive24h")
+
+	if !filterSup1B && !filterInf1B && !filterPos24h {
+		pageData := structure.Data{
+			Tokens: data.Tokens,
+		}
+		RenderTemplate(w, "collection.html", pageData)
+		return
 	}
 
-	// Filtrer la liste des tokens
-	filtered := []structure.Token{} // start with empty slice
+	filtered := []structure.Token{}
+
 	for _, t := range data.Tokens {
-		if (t.Type == "layer1" && filters.Layer1) ||
-			(t.Type == "layer2" && filters.Layer2) ||
-			(t.Type == "memecoin" && filters.Memecoin) {
+		keep := false
+		if filterSup1B && t.MarketCap >= 1000000000 {
+			keep = true
+		}
+		if filterInf1B && t.MarketCap < 1000000000 {
+			keep = true
+		}
+
+		if filterPos24h {
+			if t.Price_change_percentage_24h > 0 {
+
+				if (filterSup1B || filterInf1B) && !keep {
+				} else {
+					keep = true
+				}
+			} else {
+				keep = false
+			}
+		}
+
+		if keep {
 			filtered = append(filtered, t)
 		}
 	}
-
-	// Passe la liste filtrée et les filtres au template
 	pageData := structure.Data{
-		Tokens:  filtered,
-		Filters: filters,
+		Tokens: filtered,
 	}
 
 	RenderTemplate(w, "collection.html", pageData)

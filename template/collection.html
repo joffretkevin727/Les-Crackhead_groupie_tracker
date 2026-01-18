@@ -35,21 +35,28 @@
 
         <div id="row">
 
-            <div class="left-box">
-                <p id="filter">FILTER</p>
-                <div>
-                    <input type="checkbox" id="layer1" name="layer1" checked />
-                    <label for="layer1">Layer 1</label>
+            <form action="/filter" method="GET">
+                <div class="left-box">
+                    <p id="filter">FILTER</p>
+
+                    <div>
+                        <input type="checkbox" id="layer1" name="sup1b" value="true" />
+                        <label for="layer1">Sup 1 Billion $</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="layer2" name="inf1b" value="true" />
+                        <label for="layer2">Inf 1 Billion $</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="memecoin" name="positive24h" value="true" />
+                        <label for="memecoin">24h positif</label>
+                    </div>
+
+                    <button type="submit">Appliquer les filtres</button>
                 </div>
-                <div>
-                    <input type="checkbox" id="layer2" name="layer2" checked />
-                    <label for="layer2">Layer 2</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="memecoin" name="memecoin" checked />
-                    <label for="memecoin">Memecoin</label>
-                </div>
-            </div>
+            </form>
 
             <div class="vertical-seperator"></div>
 
