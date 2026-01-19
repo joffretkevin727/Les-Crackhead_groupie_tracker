@@ -18,7 +18,7 @@ var Urlapi string = "https://api.coingecko.com/api/v3/"
 var data = &structure.Data{
 	Tokens: api.GetTokenList(),
 }
-var UserFavorites = make(map[string]bool)
+var UserFavorites = utils.LoadFavorites()
 
 // CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
@@ -82,6 +82,7 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		} else {
 			data.Tokens[i].IsPricePercentagePositive = false
 		}
+		data.Tokens[i].IsFavorite = UserFavorites[data.Tokens[i].FullName]
 	}
 
 	RenderTemplate(w, "collection.html", data)
@@ -173,7 +174,7 @@ func AddFavorite(w http.ResponseWriter, r *http.Request) {
 			UserFavorites[tokenName] = true
 		}
 	}
-
+	utils.SaveFavorites(UserFavorites)
 	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
 	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
 }

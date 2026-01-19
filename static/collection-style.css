@@ -44,7 +44,7 @@ main {
     align-items: center;
     flex: 1;
     width: 100%;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
  #row {
@@ -296,14 +296,12 @@ header {
 }
 
 .favorite-btn {
-    width: 24px; /* Définit la largeur du bouton */
-    height: 24px; /* Définit la hauteur du bouton */
-    background-color: transparent; /* Supprime le fond par défaut */
-    border: none; /* Supprime la bordure */
-    cursor: pointer; /* Change le curseur au survol */
-    
-    /* Intégration de l'icône via masque (permet de changer la couleur facilement) */
-    background-image: url("../static/image/favorite.svg");
+    width: 24px;
+    height: 24px; 
+    background-color: transparent;
+    border: none; 
+    cursor: pointer;
+    background-image: url("../static/image/heart1.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -311,14 +309,29 @@ header {
     margin-right: 15px; /* Espace par rapport à la barre de défilement */
 }
 
-.favorite-btn:hover {
-    opacity: 0.7; /* Effet visuel simple au survol */
+.favorite-btn.active {
+    background-image: url("../static/image/heartfull.svg");
 }
 
+.favorite-btn:active {
+    transform: scale(0.9);
+}
 
+.favorites-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    /* REGLAGE CRUCIAL POUR LE SCROLL INTERNE */
+    height: 400px;     
+    overflow-y: auto;  
+    overflow-x: hidden;
+    padding-right: 5px;
+}
 
 /* ici
-*/
+
 
 
 

@@ -85,7 +85,7 @@
                         </a>
                         <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
                         <input type="hidden" name="tokenName" value="{{.FullName}}">
-                        <button class="favorite-btn" data-id="{{.Id}}" aria-label="Favorite"></button>
+                        <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
                         </form>
                     </div>
                     {{end}}

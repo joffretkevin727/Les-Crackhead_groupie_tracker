@@ -91,3 +91,18 @@ func FormatLargeNumberInt(s string) int {
 		return int(n)
 	}
 }
+
+func LoadFavorites() map[string]bool {
+	file, err := os.ReadFile("favorites.json")
+	if err != nil {
+		return make(map[string]bool) // Retourne une map vide si le fichier n'existe pas
+	}
+	var favs map[string]bool
+	json.Unmarshal(file, &favs)
+	return favs
+}
+
+func SaveFavorites(favorites map[string]bool) {
+	data, _ := json.Marshal(favorites)
+	os.WriteFile("favorites.json", data, 0644) // Écrit la map sur le disque
+}

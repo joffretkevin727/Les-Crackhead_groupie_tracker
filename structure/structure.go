@@ -12,6 +12,7 @@ type Token struct {
 	FormattedMarketCap            string
 	IsPricePercentagePositive     bool
 	Type                          string
+	IsFavorite                    bool
 }
 
 type TokenInfo struct {

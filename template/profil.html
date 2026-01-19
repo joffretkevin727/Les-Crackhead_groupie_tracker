@@ -45,6 +45,7 @@
     <h3>MES FAVORIS</h3>
     <div class="favorites-list">
         {{range .Tokens}}
+            <div class="row-container">
             <a href="/ressource/{{.FullName}}" class="row-link">
                     <div class="table-row">
                         <span class="col-rank">{{.Id}}</span>
@@ -57,6 +58,11 @@
                         <span class="col-vol">{{.FormattedMarketCap}}</span>
                     </div>
                 </a>
+                <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
+                        <input type="hidden" name="tokenName" value="{{.FullName}}">
+                        <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
+                </form>
+            </div>
         {{else}}
             <p>Vous n'avez pas encore de favoris.</p>
         {{end}}
