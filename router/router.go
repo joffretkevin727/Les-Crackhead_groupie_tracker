@@ -19,6 +19,7 @@ func New() *http.ServeMux {
 	mux.HandleFunc("/aboutus", controller.AboutUs)
 	mux.HandleFunc("/profil", controller.Profil)
 	mux.HandleFunc("/add-favorite", controller.AddFavorite)
+
 	//--------------------------------------------------
 
 	// ---------------- STATIC FILES -------------------

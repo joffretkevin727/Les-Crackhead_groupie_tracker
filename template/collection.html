@@ -35,22 +35,28 @@
 
         <div id="row">
 
-            <div class="left-box">
-                <p id="filter">FILTER</p>
-                <form method="GET" action="/filter">
-                    <div>
-                        <input type="checkbox" name="layer1" {{if .Filters.Layer1}}checked{{end}}> Layer 1
-                    </div>
-                    <div>
-                        <input type="checkbox" name="layer2" {{if .Filters.Layer2}}checked{{end}}> Layer 2
-                    </div>
-                    <div>
-                        <input type="checkbox" name="memecoin" {{if .Filters.Memecoin}}checked{{end}}> Memecoin
-                    </div>
-                    <button type="submit">Filtrer</button>
-                </form>
+            <form action="/filter" method="GET">
+                <div class="left-box">
+                    <p id="filter">FILTER</p>
 
-            </div>
+                    <div>
+                        <input type="checkbox" id="layer1" name="sup1b" value="true" />
+                        <label for="layer1">Sup 1 Billion $</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="layer2" name="inf1b" value="true" />
+                        <label for="layer2">Inf 1 Billion $</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="memecoin" name="positive24h" value="true" />
+                        <label for="memecoin">24h positif</label>
+                    </div>
+
+                    <button type="submit">Appliquer les filtres</button>
+                </div>
+            </form>
 
             <div class="vertical-seperator"></div>
 
@@ -70,25 +76,38 @@
                     <div class="header-separator"></div>
 
                     {{range .Tokens}}
-                    <div class="row-container">
-                        <a href="/ressource/{{.FullName}}" class="row-link">
-                            <div class="table-row">
-                                <span class="col-rank">{{.Id}}</span>
-                                <div class="col-name coin-info">
-                                    <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
-                                </div>
-                                <span class="col-price">{{.CurrentPrice}} $</span>
-                                <span
-                                    class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
-                                <span class="col-vol">{{.FormattedMarketCap}}</span>
-                            </div>
-                        </a>
-                        <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
-                        <input type="hidden" name="tokenName" value="{{.FullName}}">
-                        <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
-                        </form>
+                    <div class="table-row">
+                        <span class="col-rank">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.Id}}</a>
+                        </span>
+
+                        <div class="col-name coin-info">
+                            <img src="{{.Image}}" class="coin-logo">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FullName}}</a>
+                        </div>
+
+                        <span class="col-price">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.CurrentPrice}} $</a>
+                        </span>
+
+                        <span class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FormattedPrice_percentage_24h}}%</a>
+                        </span>
+
+                        <span class="col-vol">
+                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FormattedMarketCap}}</a>
+                        </span>
+
+                        <span class="col-like">
+                            <form method="POST" action="/add-favorite">
+                                <input type="hidden" name="tokenName" value="{{.FullName}}">
+                                <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
+                            </form>
+                        </span>
+
                     </div>
                     {{end}}
+
 
                 </div>
 
