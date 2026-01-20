@@ -44,7 +44,7 @@ main {
     align-items: center;
     flex: 1;
     width: 100%;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
  #row {
@@ -71,7 +71,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
     overflow-y: auto;
     height: 100%;
 }
@@ -81,8 +80,15 @@ main {
     height: 1px;
     width: 100%;
     background-color: white;
-    margin: 0;
  }
+
+.horizontal-seperator-profil {
+    border: none;
+    height: 1px;
+    width: 100%;
+    background-color: white;
+    margin: 10px;
+}
 
  .vertical-seperator {
     border: none;
@@ -97,11 +103,22 @@ main {
     font-family: "Unbounded", sans-serif;
  }
 
+.btn-filter {
+    font-family: "unbounded", sans-serif;
+    color: black;   
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
  .crypto-table {
     width: 90%;
     color: white;
     font-family: "Unbounded", sans-serif;
-    overflow-y: auto;
+    overflow-y: visible;
+    padding-top: 20px;
 }
 
 
@@ -144,9 +161,7 @@ main {
         rgba(20, 70, 157, 0.4) 0%, 
         rgba(25, 37, 110, 1) 70%
     );
-
     background-attachment: fixed;
-
     z-index: -1;
 }
 
@@ -154,7 +169,7 @@ main {
 .table-row {
     font-size: 18px;
     font-weight: 500;
-    border-bottom: 1px solid rgba(255, 255, 255, 1); 
+     
 }
 
 .header-separator {
@@ -180,14 +195,9 @@ main {
     height: 63px;
 }
 
-.green-text { color: #2ecc71; }
-.red-text { color: #e74c3c; }
+.green-text { color: #2ecc71 !important; } 
+.red-text { color: #e74c3c !important; }
 
-.heart-icon {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-}
 
 .left-box label {
     font-family: "Unbounded", sans-serif;
@@ -198,8 +208,9 @@ main {
 }
 
 .row-link {
+    flex-grow: 1;
     text-decoration: none;
-    color: inherit;
+    color: #fff;
     display: block;
 }
 
@@ -285,4 +296,100 @@ header {
 #account-btn:hover {
     color: white;
     background-color: #40ac02;
+}
+
+.row-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
+
+.favorite-btn {
+    width: 24px;
+    height: 24px; 
+    background-color: transparent;
+    border: none; 
+    cursor: pointer;
+    background-image: url("../static/image/heart1.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;    
+    margin-right: 15px;
+}
+
+.favorite-btn.active {
+    background-image: url("../static/image/heartfull.svg");
+}
+
+.favorite-btn:active {
+    transform: scale(0.9);
+}
+
+.favorites-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 400px;     
+    overflow-y: auto;  
+    overflow-x: hidden;
+    padding-right: 5px;
+}
+
+.profile-container {
+    width: 60%; 
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 3px solid #4BCC00;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recadre l'image pour remplir le cercle sans la déformer */
+    display: block;    /* Enlève l'espace vide sous l'image */
+}
+
+.join-date {
+    color: #AEAEAE;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.favorites-section {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.favorites-section h3 {
+    color: #4BCC00;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#logout-btn {
+    display: none;
+}   
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+#wallet-address-display {
+    font-size:1.1rem !important;
 }

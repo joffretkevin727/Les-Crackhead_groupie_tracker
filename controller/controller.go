@@ -18,6 +18,7 @@ var Urlapi string = "https://api.coingecko.com/api/v3/"
 var data = &structure.Data{
 	Tokens: api.GetTokenList(),
 }
+var UserFavorites = utils.LoadFavorites()
 
 // CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
@@ -58,10 +59,10 @@ func FetchData(w http.ResponseWriter, r *http.Request) {
 
 	toSave := structure.UserData{
 		LiveUser: data.Address,
-		Address:  data.Address,
+		Address:  "data.Address",
 	}
 
-	utils.SaveJson(toSave)
+	utils.AddToJSON(toSave)
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"status": "success"}`))
@@ -81,6 +82,7 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		} else {
 			data.Tokens[i].IsPricePercentagePositive = false
 		}
+		data.Tokens[i].IsFavorite = UserFavorites[data.Tokens[i].FullName]
 	}
 
 	RenderTemplate(w, "collection.html", data)
@@ -101,30 +103,74 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	// Récupère les filtres depuis les checkbox
-	filters := structure.Filters{
-		Layer1:   r.URL.Query().Has("layer1"),
-		Layer2:   r.URL.Query().Has("layer2"),
-		Memecoin: r.URL.Query().Has("memecoin"),
+
+	filterSup1B := r.URL.Query().Has("sup1b")
+	filterInf1B := r.URL.Query().Has("inf1b")
+	filterPos24h := r.URL.Query().Has("positive24h")
+
+	if !filterSup1B && !filterInf1B && !filterPos24h {
+		pageData := structure.Data{
+			Tokens: data.Tokens,
+		}
+		RenderTemplate(w, "collection.html", pageData)
+		return
 	}
 
-	// Filtrer la liste des tokens
-	filtered := []structure.Token{} // start with empty slice
+	filtered := []structure.Token{}
+
 	for _, t := range data.Tokens {
-		if (t.Type == "layer1" && filters.Layer1) ||
-			(t.Type == "layer2" && filters.Layer2) ||
-			(t.Type == "memecoin" && filters.Memecoin) {
+		keep := false
+		if filterSup1B && t.MarketCap >= 1000000000 {
+			keep = true
+		}
+		if filterInf1B && t.MarketCap < 1000000000 {
+			keep = true
+		}
+
+		if filterPos24h {
+			if t.Price_change_percentage_24h > 0 {
+
+				if (filterSup1B || filterInf1B) && !keep {
+				} else {
+					keep = true
+				}
+			} else {
+				keep = false
+			}
+		}
+
+		if keep {
 			filtered = append(filtered, t)
 		}
 	}
-
-	// Passe la liste filtrée et les filtres au template
 	pageData := structure.Data{
-		Tokens:  filtered,
-		Filters: filters,
+		Tokens: filtered,
 	}
 
 	RenderTemplate(w, "collection.html", pageData)
+}
+
+var favorites = []string{}
+
+func FavoritesHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	token := r.FormValue("token")
+	if token == "" {
+		http.Error(w, "Token missing", http.StatusBadRequest)
+		return
+	}
+
+	// Ajouter le token à la liste des favoris
+	favorites = append(favorites, token) // ou utiliser saveJSON pour persister
+
+	fmt.Println(favorites)
+
+	// Rediriger vers la page actuelle pour recharger la table
+	http.Redirect(w, r, r.Header.Get("Referer"), http.StatusSeeOther)
 }
 
 func AboutUs(w http.ResponseWriter, r *http.Request) {
@@ -133,4 +179,46 @@ func AboutUs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	RenderTemplate(w, "aboutus.html", nil)
+}
+
+func Profil(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var favoriteTokens []structure.Token
+
+	for _, t := range data.Tokens {
+		if UserFavorites[t.FullName] {
+			favoriteTokens = append(favoriteTokens, t)
+		}
+	}
+
+	pageData := structure.Data{
+		Tokens: favoriteTokens,
+	}
+
+	RenderTemplate(w, "profil.html", pageData)
+}
+
+func AddFavorite(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/list", http.StatusSeeOther)
+		return
+	}
+
+	// Récupère l'ID envoyé par le formulaire
+	tokenName := r.FormValue("tokenName")
+
+	if tokenName != "" {
+		// Toggle les favoris
+		if UserFavorites[tokenName] {
+			delete(UserFavorites, tokenName)
+		} else {
+			UserFavorites[tokenName] = true
+		}
+	}
+	utils.SaveFavorites(UserFavorites)
+	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
+	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
 }

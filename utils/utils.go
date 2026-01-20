@@ -4,7 +4,6 @@ import (
 	"Les-Crackhead_groupie_tracker/structure"
 	"encoding/json"
 	"fmt"
-	"log"
 	"math"
 	"os"
 	"strconv"
@@ -22,37 +21,6 @@ func Sort(list []structure.Token) []structure.Token {
 	return newList
 }
 
-func SaveJson(data structure.UserData) {
-	existing := make(map[string]structure.UserData)
-
-	// Lire le fichier existant
-	jsonBytes, err := os.ReadFile("coins.json")
-	if err == nil {
-		err = json.Unmarshal(jsonBytes, &existing)
-		if err != nil {
-			log.Fatal(err)
-		}
-	} else if !os.IsNotExist(err) {
-		log.Fatal(err)
-	}
-
-	// Ajouter / mettre à jour la donnée
-	existing[data.Address] = data
-
-	// Réécrire le JSON
-	newJsonBytes, err := json.MarshalIndent(existing, "", "  ")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = os.WriteFile("coins.json", newJsonBytes, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Ajout ou mise à jour dans coins.json")
-}
-
 func FormatLargeNumber(n float64) string {
 	abs := math.Abs(n)
 
@@ -68,6 +36,49 @@ func FormatLargeNumber(n float64) string {
 	default:
 		return fmt.Sprintf("%.0f", n)
 	}
+}
+
+func saveJSON(fileName string, data interface{}) error { // Convertir les données en JSON
+
+	bytes, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(fileName, bytes, 0644) // Écrire dans le fichier
+}
+
+func AddToJSON(toAdd structure.UserData) {
+	file, err := os.ReadFile("userConnexion.json")
+	if err != nil {
+		if os.IsNotExist(err) {
+			file = []byte("[]")
+		} else {
+			fmt.Println("Erreur de lecture fichier :", err)
+			return
+		}
+	}
+
+	if len(file) == 0 {
+		file = []byte("[]")
+	}
+
+	var historic []structure.UserData
+	err = json.Unmarshal(file, &historic)
+	if err != nil {
+		fmt.Println("Erreur lors du décodage JSON :", err)
+		return
+	}
+
+	historic = append(historic, toAdd)
+
+	err = saveJSON("userConnexion", historic)
+	if err != nil {
+		fmt.Println("Erreur lors de l'écriture JSON :", err)
+		return
+	}
+
+	fmt.Println("JSON mis à jour")
 }
 
 func FormatLargeNumberInt(s string) int {
@@ -90,4 +101,19 @@ func FormatLargeNumberInt(s string) int {
 	default:
 		return int(n)
 	}
+}
+
+func LoadFavorites() map[string]bool {
+	file, err := os.ReadFile("favorites.json")
+	if err != nil {
+		return make(map[string]bool) // Retourne une map vide si le fichier n'existe pas
+	}
+	var favs map[string]bool
+	json.Unmarshal(file, &favs)
+	return favs
+}
+
+func SaveFavorites(favorites map[string]bool) {
+	data, _ := json.Marshal(favorites)
+	os.WriteFile("favorites.json", data, 0644) // Écrit la map sur le disque
 }

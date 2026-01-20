@@ -17,6 +17,9 @@ func New() *http.ServeMux {
 	mux.HandleFunc("/ressource/", controller.Ressource)
 	mux.HandleFunc("/api/save-wallet", controller.FetchData)
 	mux.HandleFunc("/aboutus", controller.AboutUs)
+	mux.HandleFunc("/profil", controller.Profil)
+	mux.HandleFunc("/add-favorite", controller.AddFavorite)
+
 	//--------------------------------------------------
 
 	// ---------------- STATIC FILES -------------------

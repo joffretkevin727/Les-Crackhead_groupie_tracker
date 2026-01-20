@@ -8,14 +8,10 @@ body {
     padding: 0;
     width: 100%;
     height: 100vh;
-
     display: flex;
     flex-direction: column;
-
     background-color: #19256E;
-    background-image: radial-gradient(circle at 50% 40%,
-            rgba(20, 70, 157, 0.4) 0%,
-            rgba(25, 37, 110, 1) 70%);
+    background-image: radial-gradient(circle at 50% 40%, rgba(20, 70, 157, 0.4) 0%, rgba(25, 37, 110, 1) 70%);
     font-family: "Unbounded", sans-serif;
     color: white
 }
@@ -55,14 +51,8 @@ header {
 
 #lizard-crypto {
     position: absolute; 
-    
-
     left: 50%; 
-    
-
     transform: translateX(-50%); 
-    
-
     font-size: 50px;
     margin: 0;
     display: flex;
@@ -168,7 +158,6 @@ main {
 
 }
 
-
 .img-crypto-market {
     position: absolute;
     width: 1096px;
@@ -234,7 +223,6 @@ footer {
 .footer-left p {
     margin: 0;
 }
-
 
 .footer-left .up p {
     font-size: 1.5rem;

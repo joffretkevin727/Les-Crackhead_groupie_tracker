@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Title</title>
+    <link rel="stylesheet" href="../static/collection-style.css">
+
+</head>
+
+<body>
+
+    <header>
+        <div id="nav">
+            <img src="../static/image/CG-Symbol.svg" class="logo">
+            <a href="/home" class="top">Lizard crypto</a>
+            <a href="/list" class="top">Crypto currencies</a>
+
+            <form action="/list" method="get" class="search-box">
+                <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+                    class="search-bar-logo">
+                <input type="text" placeholder="Research...">
+            </form>
+
+            <a href="/aboutus"class="top">About us</a>
+            <span id="account-btn">CONNEXION</span>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="avatar-circle">
+                    <img src="../static/image/avatar-defaut.png" alt="Profile">
+                </div>
+                
+                
+                <p id="wallet-address-display" style="color: #4BCC00; font-size: 0.8rem; margin-bottom: 5px; word-break: break-all; opacity: 0.8;"></p>
+                
+                
+
+                <button id="logout-btn" style="margin-top: 10px; background-color: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Unbounded'; font-size: 0.7rem;">
+                    DECONNEXION
+                </button>
+            </div>
+
+        <div class="horizontal-seperator-profil"></div>
+
+        <div class="favorites-section">
+    <h3>MES FAVORIS</h3>
+    <div class="favorites-list">
+        {{range .Tokens}}
+            <div class="row-container">
+            <a href="/ressource/{{.FullName}}" class="row-link">
+                    <div class="table-row">
+                        <span class="col-rank">{{.Id}}</span>
+                        <div class="col-name coin-info">
+                            <img src="{{.Image}}" class="coin-logo"> <span>{{.FullName}}</span>
+                        </div>
+                        <span class="col-price">{{.CurrentPrice}} $</span>
+                        <span
+                            class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</span>
+                        <span class="col-vol">{{.FormattedMarketCap}}</span>
+                    </div>
+                </a>
+                <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
+                        <input type="hidden" name="tokenName" value="{{.FullName}}">
+                        <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
+                </form>
+            </div>
+        {{else}}
+            <p>Vous n'avez pas encore de favoris.</p>
+        {{end}}
+    </div>
+</div>
+    </div>
+    </main>
+    <script src="../static/app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Unbounded";
+    src: url("../static/fonts/unbounded-medium.ttf") format("truetype");
+    font-weight: medium;
+    font-style: normal;
+}
+
+header {
+    flex-shrink: 0;
+    margin: 15px 0px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+}
+
+.search-box {
+    display: flex;
+    width: 250px;
+    border: 2px solid white;   
+    border-radius: 25px;
+    overflow: hidden;
+    background-color: #fff;   
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: #fff;  
+    color: #000;          
+}
+
+.search-box button {
+    padding: 10px 15px;
+    border: none;
+    background: white;      
+    color: white;               
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-box input::placeholder {
+    color: rgb(210, 210, 210);  
+    opacity: 0.8;
+    font-family: "Unbounded"; 
+      
+}
+.search-bar-logo {
+    margin-left: 20px;
+    fill: #4BCC00;
+}
+
+
+
+.top {
+    font-family: "Unbounded", sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.top:hover {
+    color: #4BCC00;
+}
+
+#account-btn{
+    font-family: "Unbounded", sans-serif;
+    color: white;
+    background-color: #4BCC00;
+    border-radius: 30px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+#account-btn:hover {
+    color: white;
+    background-color: #40ac02;
+}
+
+/* HEADER END */
+
+.profile-container {
+    width: 60%; /* Pour garder l'aspect vertical au milieu */
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #4BCC00; /* Rappel de ta couleur verte */
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.username {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.join-date {
+    color: #AEAEAE;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.favorites-section {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.favorites-section h3 {
+    color: #4BCC00;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.row-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 1);    
+}

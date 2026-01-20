@@ -14,7 +14,7 @@ func GetTokenList() []structure.Token {
 	url := "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h"
 
 	httpClient := http.Client{
-		Timeout: time.Second * 2,
+		Timeout: time.Second * 5,
 	}
 
 	req, errReq := http.NewRequest(http.MethodGet, url, nil)

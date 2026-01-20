@@ -249,3 +249,16 @@ main {
     font-family: "Unbounded"; 
       
 }
+
+.website-btn {
+    display: inline-block;
+    font-family: "Unbounded", sans-serif;
+    color: #fff; /* Le vert de ton thème */
+
+    font-size: 0.8rem;
+    
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
