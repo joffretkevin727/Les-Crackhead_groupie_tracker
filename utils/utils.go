@@ -119,6 +119,7 @@ func SaveFavorites(favorites map[string]bool) {
 	os.WriteFile("favorites.json", data, 0644) // Écrit la map sur le disque
 }
 
+// Cette fonction verifie si une liste ordonnée de characteres se situe dans le nom ou le symbole de la cryptomonnaie
 func Research(allTokens []structure.Token, query string) []structure.Token {
 	query = strings.ToLower(strings.TrimSpace(query))
 	if query == "" {

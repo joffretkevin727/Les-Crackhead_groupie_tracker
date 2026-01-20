@@ -74,7 +74,9 @@
                     </div>
 
                     <div class="header-separator"></div>
-
+                    {{if .Message}}
+                    <p>{{.Message}}</p>
+                    {{end}}
                     {{range .Tokens}}
                     <div class="table-row">
                         <span class="col-rank">
