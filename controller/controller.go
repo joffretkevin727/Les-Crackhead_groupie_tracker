@@ -68,8 +68,6 @@ func FetchData(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"status": "success"}`))
 }
 
-func GetData() {}
-
 func Collection(w http.ResponseWriter, r *http.Request) {
 
 	for i := range data.Tokens {
@@ -84,7 +82,8 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		}
 		data.Tokens[i].IsFavorite = UserFavorites[data.Tokens[i].FullName]
 	}
-
+	fmt.Println("collection")
+	fmt.Println(data)
 	RenderTemplate(w, "collection.html", data)
 }
 
@@ -146,7 +145,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	pageData := structure.Data{
 		Tokens: filtered,
 	}
-
 	RenderTemplate(w, "collection.html", pageData)
 }
 
@@ -221,4 +219,25 @@ func AddFavorite(w http.ResponseWriter, r *http.Request) {
 	utils.SaveFavorites(UserFavorites)
 	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
 	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
+}
+
+func FilterResearch(w http.ResponseWriter, r *http.Request) {
+	// 1. Récupérer la saisie utilisateur (attribut 'name' du input HTML)
+	query := r.FormValue("search")
+
+	// 2. Appeler ta fonction de filtrage (assure-toi qu'elle accepte query en paramètre)
+	// On suppose que 'data.AllTokens' contient ta liste complète initiale
+	filtered := utils.Research(data.Tokens, query)
+
+	// 3. Préparer les données pour le template
+	output := struct {
+		Tokens      []structure.Token
+		SearchQuery string
+	}{
+		Tokens:      filtered,
+		SearchQuery: query,
+	}
+
+	// 4. Exécuter le template de la page collection
+	RenderTemplate(w, "research.html", output)
 }
