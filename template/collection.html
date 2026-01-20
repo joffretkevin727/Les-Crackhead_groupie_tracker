@@ -89,9 +89,9 @@
                         <span class="col-price">
                             <a href="/ressource/{{.FullName}}" class="row-link">{{.CurrentPrice}} $</a>
                         </span>
-
-                        <span class="col-1h {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">
-                            <a href="/ressource/{{.FullName}}" class="row-link">{{.FormattedPrice_percentage_24h}}%</a>
+                                    
+                        <span class="col-1h">
+                            <a href="/ressource/{{.FullName}}" class="row-link {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</a>
                         </span>
 
                         <span class="col-vol">

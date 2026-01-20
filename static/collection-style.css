@@ -105,7 +105,7 @@ main {
 
 .btn-filter {
     font-family: "unbounded", sans-serif;
-    color: black;
+    color: black;   
     background-color: #fff;
     border-radius: 30px;
     padding: 15px;
@@ -195,8 +195,8 @@ main {
     height: 63px;
 }
 
-.green-text { color: #2ecc71; }
-.red-text { color: #e74c3c; }
+.green-text { color: #2ecc71 !important; } 
+.red-text { color: #e74c3c !important; }
 
 
 .left-box label {
@@ -380,4 +380,16 @@ header {
 
 #logout-btn {
     display: none;
+}   
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+#wallet-address-display {
+    font-size:1.1rem !important;
 }
