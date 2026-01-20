@@ -68,8 +68,6 @@ func FetchData(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"status": "success"}`))
 }
 
-func GetData() {}
-
 func Collection(w http.ResponseWriter, r *http.Request) {
 
 	for i := range data.Tokens {
@@ -84,7 +82,8 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		}
 		data.Tokens[i].IsFavorite = UserFavorites[data.Tokens[i].FullName]
 	}
-
+	fmt.Println("collection")
+	fmt.Println(data)
 	RenderTemplate(w, "collection.html", data)
 }
 
@@ -107,16 +106,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	filterSup1B := r.URL.Query().Has("sup1b")
 	filterInf1B := r.URL.Query().Has("inf1b")
 	filterPos24h := r.URL.Query().Has("positive24h")
-
-	if !filterSup1B && !filterInf1B && !filterPos24h {
-		pageData := structure.Data{
-			Tokens: data.Tokens,
-		}
-		RenderTemplate(w, "collection.html", pageData)
-		return
-	}
-
 	filtered := []structure.Token{}
+	if !filterSup1B && !filterInf1B && !filterPos24h {
+		filtered = data.Tokens
+	}
 
 	for _, t := range data.Tokens {
 		keep := false
@@ -142,11 +135,15 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		if keep {
 			filtered = append(filtered, t)
 		}
+
 	}
+	for i := range filtered {
+		filtered[i].IsFavorite = UserFavorites[filtered[i].FullName]
+	}
+
 	pageData := structure.Data{
 		Tokens: filtered,
 	}
-
 	RenderTemplate(w, "collection.html", pageData)
 }
 
@@ -221,4 +218,34 @@ func AddFavorite(w http.ResponseWriter, r *http.Request) {
 	utils.SaveFavorites(UserFavorites)
 	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
 	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
+}
+
+func FilterResearch(w http.ResponseWriter, r *http.Request) {
+	// 1. Récupérer la saisie utilisateur (attribut 'name' du input HTML)
+	query := r.FormValue("search")
+	var textMessage string
+	// 2. Appeler ta fonction de filtrage (assure-toi qu'elle accepte query en paramètre)
+	// On suppose que 'data.AllTokens' contient ta liste complète initiale
+	filtered := utils.Research(data.Tokens, query)
+
+	if (len(filtered) == 0) && (query != "") {
+		textMessage = "Aucun résultat trouvé pour :" + " '' " + query + " '' "
+	}
+
+	for i := range filtered {
+		filtered[i].IsFavorite = UserFavorites[filtered[i].FullName]
+	}
+	// 3. Préparer les données pour le template
+	output := struct {
+		Tokens      []structure.Token
+		SearchQuery string
+		Message     string
+	}{
+		Tokens:      filtered,
+		SearchQuery: query,
+		Message:     textMessage,
+	}
+
+	// 4. Exécuter le template de la page collection
+	RenderTemplate(w, "research.html", output)
 }

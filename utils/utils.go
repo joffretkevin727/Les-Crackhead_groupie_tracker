@@ -7,6 +7,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func Sort(list []structure.Token) []structure.Token {
@@ -116,4 +117,31 @@ func LoadFavorites() map[string]bool {
 func SaveFavorites(favorites map[string]bool) {
 	data, _ := json.Marshal(favorites)
 	os.WriteFile("favorites.json", data, 0644) // Écrit la map sur le disque
+}
+
+// Cette fonction verifie si une liste ordonnée de characteres se situe dans le nom ou le symbole de la cryptomonnaie
+func Research(allTokens []structure.Token, query string) []structure.Token {
+	query = strings.ToLower(strings.TrimSpace(query))
+	if query == "" {
+		return allTokens
+	}
+
+	var startsWith []structure.Token
+	var containsOnly []structure.Token
+
+	for _, token := range allTokens {
+		name := strings.ToLower(token.FullName)
+		symbol := strings.ToLower(token.Symbol)
+
+		if strings.HasPrefix(name, query) || strings.HasPrefix(symbol, query) {
+			// Priorité 1 : Commence par la recherche
+			startsWith = append(startsWith, token)
+		} else if strings.Contains(name, query) || strings.Contains(symbol, query) {
+			// Priorité 2 : Contient la recherche (mais ne commence pas par elle)
+			containsOnly = append(containsOnly, token)
+		}
+	}
+
+	// Fusionne les deux listes : les "commence par" en premier
+	return append(startsWith, containsOnly...)
 }

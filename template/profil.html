@@ -17,10 +17,10 @@
             <a href="/home" class="top">Lizard crypto</a>
             <a href="/list" class="top">Crypto currencies</a>
 
-            <form action="/list" method="get" class="search-box">
+            <form action="/research" method="get" class="search-box">
                 <img type="submit" src="../static/image/search_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
                     class="search-bar-logo">
-                <input type="text" placeholder="Research...">
+                <input type="text" name="search" placeholder="Research...">
             </form>
 
             <a href="/aboutus"class="top">About us</a>
@@ -36,8 +36,8 @@
                     <img src="../static/image/avatar-defaut.png" alt="Profile">
                 </div>
                 
-                
-                <p id="wallet-address-display" style="color: #4BCC00; font-size: 0.8rem; margin-bottom: 5px; word-break: break-all; opacity: 0.8;"></p>
+                <p style="color: #4BCC00; font-size: 0.9rem; word-break: break-all; opacity: 0.8;">Adresse Public :</p>
+                <p id="wallet-address-display" style="color: #4BCC00; font-size: 0.8rem; margin-bottom: 5px; word-break: break-all; opacity: 0.8;">No adresse found... (Gest Session)</p>
                 
                 
 
@@ -67,7 +67,7 @@
                 </a>
                 <form action="/add-favorite" method="POST" style="position: absolute; right: 25px; margin: 0;">
                         <input type="hidden" name="tokenName" value="{{.FullName}}">
-                        <button type="submit" class="favorite-btn {{if .IsFavorite}}active{{end}}"></button>
+                        <button type="submit" class="favorite-btn active"></button>
                 </form>
             </div>
         {{else}}
