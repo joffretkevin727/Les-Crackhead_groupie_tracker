@@ -80,8 +80,15 @@ main {
     height: 1px;
     width: 100%;
     background-color: white;
-    margin: 0;
  }
+
+.horizontal-seperator-profil {
+    border: none;
+    height: 1px;
+    width: 100%;
+    background-color: white;
+    margin: 10px;
+}
 
  .vertical-seperator {
     border: none;
@@ -95,6 +102,16 @@ main {
     font-size: 50px;
     font-family: "Unbounded", sans-serif;
  }
+
+.btn-filter {
+    font-family: "unbounded", sans-serif;
+    color: black;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
 
  .crypto-table {
     width: 90%;
@@ -193,7 +210,7 @@ main {
 .row-link {
     flex-grow: 1;
     text-decoration: none;
-    color: inherit;
+    color: #fff;
     display: block;
 }
 
@@ -329,17 +346,19 @@ header {
 }
 
 .avatar-circle {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     border: 3px solid #4BCC00;
     overflow: hidden;
     margin-bottom: 15px;
 }
 
-.username {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recadre l'image pour remplir le cercle sans la déformer */
+    display: block;    /* Enlève l'espace vide sous l'image */
 }
 
 .join-date {
@@ -359,4 +378,6 @@ header {
     text-align: center;
 }
 
-
+#logout-btn {
+    display: none;
+}

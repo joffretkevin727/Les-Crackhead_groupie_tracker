@@ -78,7 +78,7 @@ func AddToJSON(toAdd structure.UserData) {
 		return
 	}
 
-	fmt.Println("JSON mis à jour avec succès !")
+	fmt.Println("JSON mis à jour")
 }
 
 func FormatLargeNumberInt(s string) int {

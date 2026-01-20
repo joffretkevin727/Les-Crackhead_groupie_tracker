@@ -23,8 +23,8 @@ const ethersConfig = defaultConfig({
   enableInjected: true,
   enableCoinbase: true,
 })
-
-const modal = createWeb3Modal({
+//on exporte la constante modal pour pouvoir gerer les deconnections dans profil
+export const modal = createWeb3Modal({
   ethersConfig,
   chains: [mainnet],
   projectId,
@@ -32,13 +32,27 @@ const modal = createWeb3Modal({
 })
 
 const btn = document.getElementById("account-btn");
+const logoutBtn = document.getElementById('logout-btn');
 
 if (btn) {
   btn.onclick = () => {
-    modal.open()
+    if (btn.innerText.trim() === "CONNEXION") {
+      modal.open();
+    } else {
+      window.location.href = "/profil";
+    }
+
   }
 } else {
   console.error("Erreur: Le bouton avec l'ID 'account-btn' est introuvable dans le HTML.");
+}
+
+// 2. GESTION DU BOUTON DE DÉCONNEXION (PAGE PROFIL UNIQUEMENT)
+if (logoutBtn) {
+    logoutBtn.onclick = async () => {
+        await modal.disconnect();
+        window.location.href = "/home"; 
+    };
 }
 
 modal.subscribeState(state => {
@@ -52,51 +66,48 @@ modal.subscribeState(state => {
 
 // 1. Écouter les changements de compte (Connexion, Déconnexion, Changement de compte)
 modal.subscribeProvider((state) => {
-  if (state.address) {
-    const userAddress = state.address;
-    console.log("L'utilisateur est connecté avec :", userAddress);
-    setBtnAddress(userAddress);
+    const logoutBtn = document.getElementById('logout-btn');
+    const walletDisplay = document.getElementById("wallet-address-display");
 
-    fetch('/api/save-wallet', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: userAddress })
-    });
-  } else {
-    console.log("Utilisateur déconnecté");
-    setBtnAddress(null);
-  }
+    if (state.address) {
+        // État Connecté
+        if (btn) btn.innerText = "MY ACCOUNT";
+        if (walletDisplay) walletDisplay.innerText = state.address;
+        if (logoutBtn) logoutBtn.style.display = "block"; // Affiche Logout
+
+        fetch('/api/save-wallet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: state.address })
+        });
+    } else {
+        // État Déconnecté
+        if (btn) btn.innerText = "CONNEXION";
+        if (walletDisplay) walletDisplay.innerText = "";
+        if (logoutBtn) logoutBtn.style.display = "none"; // Cache Logout
+    }
 });
 
 
 try {
-  // On demande au modal : "Est-ce qu'on a déjà une adresse en mémoire ?"
-  const currentAddress = modal.getAddress();
-
-  if (currentAddress) {
-    console.log("✅ Déjà connecté au démarrage avec :", currentAddress);
-
-    // On met à jour le bouton tout de suite
-    const btn = document.getElementById("account-btn");
-    if (btn) {
-      btn.innerText = currentAddress.slice(0, 6) + "..." + currentAddress.slice(-4);
+    const currentAddress = modal.getAddress();
+    
+    if (currentAddress) {
+        // 1. Mettre à jour le bouton de navigation
+        if (btn) btn.innerText = "MY ACCOUNT";
+        
+        // 2. Gérer les éléments spécifiques à la page profil
+        const logoutBtn = document.getElementById('logout-btn');
+        const walletDisplay = document.getElementById("wallet-address-display");
+        
+        if (logoutBtn) logoutBtn.style.display = "block"; // Affiche Logout
+        if (walletDisplay) walletDisplay.innerText = currentAddress; // Affiche l'adresse
     }
-  } else {
-    console.log("⚪ Pas connecté au démarrage.");
-  }
 } catch (error) {
-  // Parfois, si le provider n'est pas encore prêt, ça peut échouer silencieusement
-  console.log("Attente de l'initialisation...");
+    console.log("Initialisation du provider en cours...");
 }
 
 function setBtnAddress(address) {
   if (!btn) return;
-
-  if (!address) {
-    btn.innerText = "MY ACCOUNT";
-    return;
-  }
-
-  const short = address.slice(0, 6) + "..." + address.slice(-4);
-  btn.innerText = short;
+  btn.innerText = address ? "MY ACCOUNT" : "CONNEXION";
 }
