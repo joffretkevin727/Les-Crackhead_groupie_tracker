@@ -18,10 +18,10 @@ var Urlapi string = "https://api.coingecko.com/api/v3/"
 var data = &structure.Data{
 	Tokens: api.GetTokenList(),
 }
+var favorites = []string{}
 var UserFavorites = utils.LoadFavorites()
 
-// CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
-func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
+func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) { // CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 	template := template.Must(template.ParseFiles("template/" + filename))
 
 	buf := new(bytes.Buffer)
@@ -32,8 +32,7 @@ func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
 	w.Write(buf.Bytes())
 }
 
-// LA FONCTION GERE L'AFFICHAGE DE HOME
-func Home(w http.ResponseWriter, r *http.Request) {
+func Home(w http.ResponseWriter, r *http.Request) { // LA FONCTION GERE L'AFFICHAGE DE HOME
 
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -42,7 +41,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "home.html", nil)
 }
 
-func FetchData(w http.ResponseWriter, r *http.Request) {
+func FetchData(w http.ResponseWriter, r *http.Request) { // Réceptionne et stocke l'adresse publique du portefeuille utilisateur (session Guest).
 	if r.Method != http.MethodPost {
 		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
 		return
@@ -68,9 +67,7 @@ func FetchData(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"status": "success"}`))
 }
 
-func GetData() {}
-
-func Collection(w http.ResponseWriter, r *http.Request) {
+func Collection(w http.ResponseWriter, r *http.Request) { // Prépare la liste globale avec formatage des nombres et état des favoris.
 
 	for i := range data.Tokens {
 		data.Tokens[i].Id = i + 1
@@ -82,13 +79,14 @@ func Collection(w http.ResponseWriter, r *http.Request) {
 		} else {
 			data.Tokens[i].IsPricePercentagePositive = false
 		}
-		data.Tokens[i].IsFavorite = UserFavorites[data.Tokens[i].FullName]
+
 	}
+	utils.SyncFavorites(data.Tokens, UserFavorites)
 
 	RenderTemplate(w, "collection.html", data)
 }
 
-func Ressource(w http.ResponseWriter, r *http.Request) {
+func Ressource(w http.ResponseWriter, r *http.Request) { // Récupère les détails profonds d'un token via son ID unique dans l'URL.
 	symbol := strings.TrimPrefix(r.URL.Path, "/ressource/")
 
 	fmt.Println("Symbole cliqué :", symbol)
@@ -102,21 +100,15 @@ func Ressource(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "ressource.html", data)
 }
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(w http.ResponseWriter, r *http.Request) { // Gère le filtrage croisé (MarketCap et Variation 24h) de la liste principale.
 
 	filterSup1B := r.URL.Query().Has("sup1b")
 	filterInf1B := r.URL.Query().Has("inf1b")
 	filterPos24h := r.URL.Query().Has("positive24h")
-
-	if !filterSup1B && !filterInf1B && !filterPos24h {
-		pageData := structure.Data{
-			Tokens: data.Tokens,
-		}
-		RenderTemplate(w, "collection.html", pageData)
-		return
-	}
-
 	filtered := []structure.Token{}
+	if !filterSup1B && !filterInf1B && !filterPos24h {
+		filtered = data.Tokens
+	}
 
 	for _, t := range data.Tokens {
 		keep := false
@@ -142,15 +134,15 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		if keep {
 			filtered = append(filtered, t)
 		}
+
 	}
+	utils.SyncFavorites(filtered, UserFavorites)
+
 	pageData := structure.Data{
 		Tokens: filtered,
 	}
-
 	RenderTemplate(w, "collection.html", pageData)
 }
-
-var favorites = []string{}
 
 func FavoritesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -181,7 +173,7 @@ func AboutUs(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "aboutus.html", nil)
 }
 
-func Profil(w http.ResponseWriter, r *http.Request) {
+func Profil(w http.ResponseWriter, r *http.Request) { // Construit une sous-liste de tokens en vérifiant la présence de chaque nom dans la map UserFavorites.
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -201,7 +193,7 @@ func Profil(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "profil.html", pageData)
 }
 
-func AddFavorite(w http.ResponseWriter, r *http.Request) {
+func AddFavorite(w http.ResponseWriter, r *http.Request) { // Bascule l'état d'un favori (ajout/suppression) et synchronise immédiatement le stockage persistant.
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/list", http.StatusSeeOther)
 		return
@@ -211,7 +203,7 @@ func AddFavorite(w http.ResponseWriter, r *http.Request) {
 	tokenName := r.FormValue("tokenName")
 
 	if tokenName != "" {
-		// Toggle les favoris
+
 		if UserFavorites[tokenName] {
 			delete(UserFavorites, tokenName)
 		} else {
@@ -221,4 +213,30 @@ func AddFavorite(w http.ResponseWriter, r *http.Request) {
 	utils.SaveFavorites(UserFavorites)
 	// Redirige l'utilisateur vers la même page pour "rafraîchir" l'affichage
 	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
+}
+
+func FilterResearch(w http.ResponseWriter, r *http.Request) { // Gère la logique de recherche textuelle et retourne les résultats synchronisés avec les favoris.
+
+	query := r.FormValue("search")
+	var textMessage string
+
+	filtered := utils.Research(data.Tokens, query)
+
+	if (len(filtered) == 0) && (query != "") {
+		textMessage = "Aucun résultat trouvé pour :" + " '' " + query + " '' "
+	}
+
+	utils.SyncFavorites(filtered, UserFavorites)
+
+	output := struct {
+		Tokens      []structure.Token
+		SearchQuery string
+		Message     string
+	}{
+		Tokens:      filtered,
+		SearchQuery: query,
+		Message:     textMessage,
+	}
+
+	RenderTemplate(w, "research.html", output)
 }

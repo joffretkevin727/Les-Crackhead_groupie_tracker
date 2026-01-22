@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func GetTokenList() []structure.Token {
+func GetTokenList() []structure.Token { // Récupère une liste de tokens depuis l'API CoinGecko avec un timeout de 5 secondes.
 
 	url := "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h"
 
@@ -39,8 +39,6 @@ func GetTokenList() []structure.Token {
 		return []structure.Token{}
 	}
 
-	//fmt.Println(string(body))
-
 	var decodeData []structure.Token
 
 	json.Unmarshal(body, &decodeData)
@@ -49,12 +47,12 @@ func GetTokenList() []structure.Token {
 
 }
 
-func GetTokenInfo(tokenName string) structure.TokenInfo {
+func GetTokenInfo(tokenName string) structure.TokenInfo { // Extrait les détails d'un jeton et simplifie l'arborescence complexe de l'API.
 
 	url := "https://api.coingecko.com/api/v3/coins/" + tokenName
 
 	httpClient := http.Client{
-		Timeout: time.Second * 2,
+		Timeout: time.Second * 5,
 	}
 
 	req, errReq := http.NewRequest(http.MethodGet, url, nil)
@@ -79,13 +77,11 @@ func GetTokenInfo(tokenName string) structure.TokenInfo {
 		return structure.TokenInfo{}
 	}
 
-	//fmt.Println(string(body))
-
 	var decodeData structure.TokenInfo
 
 	json.Unmarshal(body, &decodeData)
 
-	decodeData.DescriptionFinal = decodeData.Description.En
+	decodeData.DescriptionFinal = decodeData.Description.En // Aplatit les données imbriquées (Localization, Image, Links) pour le template
 	decodeData.Image = decodeData.ImgUrl.Large
 	decodeData.WebUrl = decodeData.Links.Homepage[0]
 
