@@ -197,6 +197,7 @@ main {
 
 .green-text { color: #2ecc71 !important; } 
 .red-text { color: #e74c3c !important; }
+.white-text { color: #ffffff !important; }
 
 
 .left-box label {
@@ -373,7 +374,7 @@ header {
 }
 
 .favorites-section h3 {
-    color: #4BCC00;
+    color: #ffffff;
     margin-bottom: 20px;
     text-align: center;
 }
