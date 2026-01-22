@@ -9,9 +9,9 @@ import (
 	"time"
 )
 
-func GetTokenList() []structure.Token { // Récupère une liste de tokens depuis l'API CoinGecko avec un timeout de 5 secondes.
+func GetTokenList(page int) []structure.Token { // Récupère une liste de tokens depuis l'API CoinGecko avec un timeout de 5 secondes.
 
-	url := "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h"
+	url := fmt.Sprintf("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=1h&page=%d", page)
 
 	httpClient := http.Client{
 		Timeout: time.Second * 5,

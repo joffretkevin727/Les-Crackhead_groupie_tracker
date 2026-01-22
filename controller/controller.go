@@ -9,14 +9,17 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
 var Token string = "CG-5oBeGf9b4qSv7c4ENCCz4rw8"
 var Urlapi string = "https://api.coingecko.com/api/v3/"
 
+var page int = 1
+
 var data = &structure.Data{
-	Tokens: api.GetTokenList(),
+	Tokens: api.GetTokenList(page),
 }
 var favorites = []string{}
 var UserFavorites = utils.LoadFavorites()
@@ -67,23 +70,42 @@ func FetchData(w http.ResponseWriter, r *http.Request) { // Réceptionne et stoc
 	w.Write([]byte(`{"status": "success"}`))
 }
 
-func Collection(w http.ResponseWriter, r *http.Request) { // Prépare la liste globale avec formatage des nombres et état des favoris.
+func Collection(w http.ResponseWriter, r *http.Request) {
+	pageStr := r.URL.Query().Get("page")
+	page, err := strconv.Atoi(pageStr)
 
-	for i := range data.Tokens {
-		data.Tokens[i].Id = i + 1
-		data.Tokens[i].FormattedMarketCap = utils.FormatLargeNumber(data.Tokens[i].MarketCap)
-		data.Tokens[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", data.Tokens[i].Price_change_percentage_24h)
-		data.Tokens[i].Type = "layer1"
-		if data.Tokens[i].Price_change_percentage_24h > 0 {
-			data.Tokens[i].IsPricePercentagePositive = true
+	if err != nil || page < 1 {
+		page = 1
+	}
+
+	tokens := api.GetTokenList(page)
+
+	for i := range tokens {
+		tokens[i].Id = ((page - 1) * 20) + (i + 1)
+
+		tokens[i].FormattedMarketCap = utils.FormatLargeNumber(tokens[i].MarketCap)
+		tokens[i].FormattedPrice_percentage_24h = fmt.Sprintf("%.2f", tokens[i].Price_change_percentage_24h)
+
+		if tokens[i].Price_change_percentage_24h > 0 {
+			tokens[i].IsPricePercentagePositive = true
 		} else {
-			data.Tokens[i].IsPricePercentagePositive = false
+			tokens[i].IsPricePercentagePositive = false
 		}
 
+		tokens[i].Type = "layer1"
 	}
-	utils.SyncFavorites(data.Tokens, UserFavorites)
 
-	RenderTemplate(w, "collection.html", data)
+	utils.SyncFavorites(tokens, UserFavorites)
+
+	pageData := structure.Data{
+		Tokens:      tokens,
+		CurrentPage: page,
+		NextPage:    page + 1,
+		PrevPage:    page - 1,
+		HasPrev:     page > 1,
+	}
+
+	RenderTemplate(w, "collection.html", pageData)
 }
 
 func Ressource(w http.ResponseWriter, r *http.Request) { // Récupère les détails profonds d'un token via son ID unique dans l'URL.

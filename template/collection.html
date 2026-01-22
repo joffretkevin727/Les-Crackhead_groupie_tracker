@@ -89,9 +89,10 @@
                         <span class="col-price">
                             <a href="/ressource/{{.FullName}}" class="row-link">{{.CurrentPrice}} $</a>
                         </span>
-                                    
+
                         <span class="col-1h">
-                            <a href="/ressource/{{.FullName}}" class="row-link {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</a>
+                            <a href="/ressource/{{.FullName}}"
+                                class="row-link {{if .IsPricePercentagePositive}}green-text{{else}}red-text{{end}}">{{.FormattedPrice_percentage_24h}}%</a>
                         </span>
 
                         <span class="col-vol">
@@ -115,6 +116,22 @@
 
         </div>
     </main>
+
+    <footer>
+        <div class="pagination-container" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+
+            {{if .HasPrev}}
+            <a href="/list?page={{.PrevPage}}" class="page-btn">&laquo; Précédent</a>
+            {{else}}
+            <span class="page-btn disabled" style="opacity: 0.5;">&laquo; Précédent</span>
+            {{end}}
+
+            <span class="page-info">Page {{.CurrentPage}}</span>
+
+            <a href="/list?page={{.NextPage}}" class="page-btn">Suivant &raquo;</a>
+
+        </div>
+    </footer>
 
     <script src="../static/app.js" type="module"></script>
 

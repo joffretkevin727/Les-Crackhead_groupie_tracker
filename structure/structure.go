@@ -67,7 +67,15 @@ type Filters struct { // Définit l'état des filtres sélectionnés via les cas
 	Memecoin bool
 }
 
-type Data struct { // Structure de données racine envoyée au template pour le rendu des listes et l'état des filtres.
-	Tokens  []Token
-	Filters Filters
+type Data struct {
+	Tokens []Token // Votre liste existante
+
+	// Champs ajoutés pour la pagination
+	CurrentPage int
+	TotalPages  int
+	HasPrev     bool
+	HasNext     bool
+	PrevPage    int
+	NextPage    int
+	Filters     Filters
 }
